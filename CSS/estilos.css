@@ -1,0 +1,17 @@
+/*Variables Globales*/
+
+:root {
+    --color-primario: #1a0b3d;
+    --color-secundario: #cc0000;
+    --color-hover: #ff0000;
+    --color-oscuro: #000000;
+    --color-claro: #ffffff;
+    --color-gris: #9ca3af;
+    --fuente-principal: 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--color-claro);
+    color: var(--color-oscuro);
+    font-family: var(--fuente-principal);
+}

@@ -71,3 +71,14 @@ footer hr {
 footer h4, footer h6 {
     text-shadow: 0 0 8px rgba(204, 0, 0, 0.6);
 }
+
+/*Tarjeta de producto*/
+
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}

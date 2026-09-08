@@ -77,7 +77,7 @@ if (formRegistro) {
         }
 
         // Simulación de éxito
-        alert("¡Cuenta creada exitosamente! Bienvenido a Phantom. (Simulación Frontend)");
+        alert("¡Cuenta creada exitosamente!");
         formRegistro.reset();
     });
 }

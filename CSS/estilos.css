@@ -82,3 +82,20 @@ footer h4, footer h6 {
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
+
+/*Categorias*/
+.col-6.col-sm-4.col-md-2 > a {
+    transition: transform 0.3s ease;
+}
+
+.col-6.col-sm-4.col-md-2 > a:hover {
+    transform: translateY(-6px);
+}
+
+.col-6.col-sm-4.col-md-2 > a img {
+    transition: transform 0.3s ease;
+}
+
+.col-6.col-sm-4.col-md-2 > a:hover img {
+    transform: scale(1.08);
+}

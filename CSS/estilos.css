@@ -145,3 +145,30 @@ footer h4, footer h6 {
     transform: translateY(-2px);
     box-shadow: 0 6px 14px rgba(255, 0, 0, 0.35);
 }
+
+/*Popup de Promoción*/
+
+#promoModal {
+    z-index: 1060;
+}
+
+#promoModal .modal-content {
+    background-color: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(6px);
+    color: var(--color-claro);
+}
+
+#promoModal .btn-close {
+    filter: invert(1) grayscale(100%) brightness(2);
+}
+
+#promoModal .btn-danger {
+    background-color: var(--color-secundario);
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#promoModal .btn-danger:hover {
+    background-color: var(--color-hover);
+    transform: translateY(-2px);
+}

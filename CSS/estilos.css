@@ -27,6 +27,27 @@ body {
     color: var(--color-hover);
 }
 
+.navbar-nav .nav-link.px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--color-hover) !important;
+}
+
+/* Menú hamburguesa en mayores dispositivos */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: none !important;
+    }
+    .navbar-expand-lg .navbar-toggler {
+        display: block !important;
+    }
+}
+
 /*Footer*/
 
 footer {
@@ -81,4 +102,21 @@ footer h4, footer h6 {
 .product-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/*Categorias*/
+.col-6.col-sm-4.col-md-2 > a {
+    transition: transform 0.3s ease;
+}
+
+.col-6.col-sm-4.col-md-2 > a:hover {
+    transform: translateY(-6px);
+}
+
+.col-6.col-sm-4.col-md-2 > a img {
+    transition: transform 0.3s ease;
+}
+
+.col-6.col-sm-4.col-md-2 > a:hover img {
+    transform: scale(1.08);
 }

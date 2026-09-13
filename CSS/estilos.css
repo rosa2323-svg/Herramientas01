@@ -192,3 +192,23 @@ footer h4, footer h6 {
         border-bottom: none;
     }
 }
+
+/* Grilla de productos y textos en misión, visión y nosotros para moviles */
+
+@media (max-width: 576px) {
+    .display-5 {
+        font-size: 1.8rem;
+    }
+
+    .display-6 {
+        font-size: 1.4rem;
+    }
+
+    .lead {
+        font-size: 1rem;
+    }
+
+    .product-card .card-body {
+        padding: 1rem !important;
+    }
+}

@@ -172,3 +172,23 @@ footer h4, footer h6 {
     background-color: var(--color-hover);
     transform: translateY(-2px);
 }
+
+/*Media Queries en Moviles*/
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: var(--color-oscuro);
+        border-radius: 8px;
+        margin-top: 0.75rem;
+        padding: 1rem;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.6rem 1rem !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .navbar-nav .nav-link:last-child {
+        border-bottom: none;
+    }
+}

@@ -110,9 +110,9 @@
             b.setAttribute("aria-pressed", activo);
         });
         document.getElementById("textoPeriodo").textContent = "Mostrando los últimos " + dias + " días";
-
         renderProductoMasVendido(periodo);
         renderUsuarios(periodo);
+        renderGraficos(periodo);
     }
     document.getElementById("filtroDias").addEventListener("click", function (e) {
         const btn = e.target.closest("button[data-dias]");
@@ -120,6 +120,5 @@
         dias = Number(btn.dataset.dias);
         actualizar();
     });
-    actualizar();
-    renderGraficos(periodoActual()); // Dibuja los gráficos una vez
+    actualizar(); // estado inicial: pinta tarjetas y gráficos con 30 días
 })();

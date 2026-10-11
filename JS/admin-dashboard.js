@@ -10,15 +10,19 @@
     Chart.defaults.color = "#555";
     Chart.defaults.responsive = true;
     let dias = 30; // período por defecto
+    let graficoVentas = null;
+    let graficoUsuarios = null;
     // Últimos N días del mock data
     const periodoActual = () => DASHBOARD_DATOS.slice(-dias);
     const nombreProducto = id => (productos.find(p => p.id === id) || {}).nombre || ("Producto " + id);
+    const etiquetaFecha = fecha => fecha.slice(5).split("-").reverse().join("/"); // 2026-10-11 -> 11/10
     // Producto más vendido del período ---
     function productoMasVendido(periodo) {
         const totales = {};
         periodo.forEach(d => d.ventas.forEach(v => {
             totales[v.id] = (totales[v.id] || 0) + v.cantidad;
         }));
+
         let mejor = null;
         Object.entries(totales).forEach(([id, cantidad]) => {
             if (!mejor || cantidad > mejor.cantidad) mejor = { id: Number(id), cantidad: cantidad };
@@ -40,6 +44,62 @@
         document.getElementById("kpiActivos").textContent = promedioActivos.toLocaleString("es-PE");
         document.getElementById("kpiNuevos").textContent = totalNuevos.toLocaleString("es-PE");
     }
+    // Gráficos de Chart.js ---
+    // Si el gráfico no existe lo crea; si ya existe solo actualiza sus datos
+    function renderGraficos(periodo) {
+        const etiquetas = periodo.map(d => etiquetaFecha(d.fecha));
+        const unidades = periodo.map(d => d.ventas.reduce((s, v) => s + v.cantidad, 0));
+        const activos = periodo.map(d => d.activos);
+        const nuevos = periodo.map(d => d.nuevos);
+        // Gráfico 1: unidades vendidas por día
+        if (!graficoVentas) {
+            graficoVentas = new Chart(document.getElementById("graficoVentas"), {
+                type: "line",
+                data: {
+                    labels: etiquetas,
+                    datasets: [{
+                        label: "Unidades vendidas",
+                        data: unidades,
+                        borderColor: "#cc0000",
+                        backgroundColor: "rgba(204, 0, 0, 0.12)",
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0
+                    }]
+                },
+                options: { interaction: { mode: "index", intersect: false } }
+            });
+        } else {
+            graficoVentas.data.labels = etiquetas;
+            graficoVentas.data.datasets[0].data = unidades;
+            graficoVentas.update();
+        }
+        // Gráfico 2: usuarios activos (eje izquierdo) y nuevos (eje derecho)
+        if (!graficoUsuarios) {
+            graficoUsuarios = new Chart(document.getElementById("graficoUsuarios"), {
+                type: "line",
+                data: {
+                    labels: etiquetas,
+                    datasets: [
+                        { label: "Usuarios activos", data: activos, borderColor: "#1a0b3d", tension: 0.3, pointRadius: 0, yAxisID: "y" },
+                        { label: "Usuarios nuevos", data: nuevos, borderColor: "#198754", tension: 0.3, pointRadius: 0, yAxisID: "y1" }
+                    ]
+                },
+                options: {
+                    interaction: { mode: "index", intersect: false },
+                    scales: {
+                        y:  { position: "left",  title: { display: true, text: "Activos" } },
+                        y1: { position: "right", title: { display: true, text: "Nuevos" }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+        } else {
+            graficoUsuarios.data.labels = etiquetas;
+            graficoUsuarios.data.datasets[0].data = activos;
+            graficoUsuarios.data.datasets[1].data = nuevos;
+            graficoUsuarios.update();
+        }
+    }
     // --- Filtro de tiempo ---
     function actualizar() {
         const periodo = periodoActual();
@@ -50,6 +110,7 @@
             b.setAttribute("aria-pressed", activo);
         });
         document.getElementById("textoPeriodo").textContent = "Mostrando los últimos " + dias + " días";
+
         renderProductoMasVendido(periodo);
         renderUsuarios(periodo);
     }
@@ -60,4 +121,5 @@
         actualizar();
     });
     actualizar();
+    renderGraficos(periodoActual()); // Dibuja los gráficos una vez
 })();

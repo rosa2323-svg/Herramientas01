@@ -496,3 +496,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-ver-password]").forEach((boton) => {
+        boton.addEventListener("click", () => {
+            const campo = document.getElementById(boton.dataset.verPassword);
+            if (!campo) return;
+
+            const mostrar = campo.type === "password";
+            campo.type = mostrar ? "text" : "password";
+
+            const icono = boton.querySelector("i");
+            icono.classList.toggle("bi-eye", !mostrar);
+            icono.classList.toggle("bi-eye-slash", mostrar);
+            boton.setAttribute("aria-label", mostrar ? "Ocultar contraseña" : "Mostrar contraseña");
+        });
+    });
+    
+    const formPassword = document.getElementById("formPassword");
+    if (formPassword) {
+        formPassword.addEventListener("reset", () => {
+            formPassword.querySelectorAll("[data-ver-password]").forEach((boton) => {
+                const campo = document.getElementById(boton.dataset.verPassword);
+                if (campo) campo.type = "password";
+                const icono = boton.querySelector("i");
+                icono.classList.add("bi-eye");
+                icono.classList.remove("bi-eye-slash");
+                boton.setAttribute("aria-label", "Mostrar contraseña");
+            });
+        });
+    }
+});

@@ -180,9 +180,15 @@
                                 <form id="formPassword" novalidate>
                                     <div class="mb-3">
                                         <label for="inputPasswordActual" class="form-label">Contraseña actual</label>
-                                        <input type="password" id="inputPasswordActual" class="form-control"
-                                               placeholder="Tu contraseña actual" autocomplete="current-password" required>
-                                        <div class="invalid-feedback">Ingresa tu contraseña actual.</div>
+                                        <div class="input-group has-validation">
+                                            <input type="password" id="inputPasswordActual" class="form-control"
+                                                   placeholder="Tu contraseña actual" autocomplete="current-password" required>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    data-ver-password="inputPasswordActual" aria-label="Mostrar contraseña">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <div class="invalid-feedback">Ingresa tu contraseña actual.</div>
+                                        </div>
                                         <div id="avisoSinPassword" class="form-text d-none">
                                             Aún no tienes una contraseña guardada: se creará con la nueva.
                                         </div>
@@ -190,16 +196,28 @@
 
                                     <div class="mb-3">
                                         <label for="inputPasswordNueva" class="form-label">Nueva contraseña</label>
-                                        <input type="password" id="inputPasswordNueva" class="form-control"
-                                               placeholder="Mínimo 8 caracteres" minlength="8" autocomplete="new-password" required>
-                                        <div class="invalid-feedback">La nueva contraseña debe tener mínimo 8 caracteres.</div>
+                                        <div class="input-group has-validation">
+                                            <input type="password" id="inputPasswordNueva" class="form-control"
+                                                   placeholder="Mínimo 8 caracteres" minlength="8" autocomplete="new-password" required>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    data-ver-password="inputPasswordNueva" aria-label="Mostrar contraseña">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <div class="invalid-feedback">La nueva contraseña debe tener mínimo 8 caracteres.</div>
+                                        </div>
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="inputPasswordConfirmar" class="form-label">Confirmar nueva contraseña</label>
-                                        <input type="password" id="inputPasswordConfirmar" class="form-control"
-                                               placeholder="Repite la nueva contraseña" autocomplete="new-password" required>
-                                        <div class="invalid-feedback">Confirma la nueva contraseña.</div>
+                                        <div class="input-group has-validation">
+                                            <input type="password" id="inputPasswordConfirmar" class="form-control"
+                                                   placeholder="Repite la nueva contraseña" autocomplete="new-password" required>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    data-ver-password="inputPasswordConfirmar" aria-label="Mostrar contraseña">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <div class="invalid-feedback">Confirma la nueva contraseña.</div>
+                                        </div>
                                     </div>
 
                                     <button type="submit" class="btn btn-danger w-100 fw-bold">

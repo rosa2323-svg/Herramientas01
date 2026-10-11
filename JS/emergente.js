@@ -10,7 +10,9 @@ if (elementoModal) {
 
         // Espera 3 segundos antes de lanzarse
         setTimeout(() => {
-            myModal.show();
+            if (!document.querySelector('.modal.show')) {
+                myModal.show();
+            }
         }, 3000);
         elementoModal.addEventListener('hidden.bs.modal', function () {
             localStorage.setItem('promoMostrada', 'true');

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER TECH | Indicadores (KPI)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/estilos.css">
+    <link rel="stylesheet" href="../CSS/admin.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark admin-barra">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="../index.html"><i class="bi bi-house-fill me-2"></i>MASTER TECH</a>
+        <div class="admin-enlaces">
+            <a class="nav-link" href="admin-productos.html"><i class="bi bi-box-seam"></i> Productos</a>
+            <a class="nav-link" href="admin-ventas.html"><i class="bi bi-receipt"></i> Ventas</a>
+            <a class="nav-link active" href="admin-dashboard.html" aria-current="page"><i class="bi bi-bar-chart-line"></i> Dashboard</a>
+        </div>
+    </div>
+</nav>
+<main class="admin-principal">
+    <div class="admin-encabezado">
+        <div>
+            <h1 class="admin-titulo">Indicadores (KPI)</h1>
+            <p class="admin-subtitulo">Resumen de ventas y usuarios de Master Tech (datos simulados).</p>
+        </div>
+        <div>
+            <div class="btn-group" role="group" id="filtroDias" aria-label="Filtro de tiempo">
+                <button type="button" class="btn btn-outline-dark" data-dias="30">30 días</button>
+                <button type="button" class="btn btn-outline-dark" data-dias="60">60 días</button>
+                <button type="button" class="btn btn-outline-dark" data-dias="90">90 días</button>
+            </div>
+            <div class="texto-tenue small mt-1 text-end" id="textoPeriodo"></div>
+        </div>
+    </div>
+    <div id="avisos"></div>
+    <!-- Tarjetas de resumen -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="card shadow-sm h-100"><div class="card-body">
+                <p class="text-muted small mb-1">Producto más vendido</p>
+                <h5 id="kpiProducto" class="fw-bold mb-1">-</h5>
+                <small id="kpiProductoUnidades" class="text-muted"></small>
+            </div></div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card shadow-sm h-100"><div class="card-body">
+                <p class="text-muted small mb-1">Usuarios activos (promedio diario)</p>
+                <h3 id="kpiActivos" class="fw-bold mb-0">-</h3>
+            </div></div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card shadow-sm h-100"><div class="card-body">
+                <p class="text-muted small mb-1">Usuarios nuevos (total)</p>
+                <h3 id="kpiNuevos" class="fw-bold mb-0">-</h3>
+            </div></div>
+        </div>
+    </div>
+    <!-- Gráficos -->
+    <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm"><div class="card-body">
+                <h6 class="fw-bold">Unidades vendidas por día</h6>
+                <canvas id="graficoVentas"></canvas>
+            </div></div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm"><div class="card-body">
+                <h6 class="fw-bold">Usuarios activos y nuevos</h6>
+                <canvas id="graficoUsuarios"></canvas>
+            </div></div>
+        </div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../JS/productos.js"></script>
+<script src="../JS/dashboard-datos.js"></script>
+<script src="../JS/admin-comun.js"></script>
+<script src="../JS/admin-dashboard.js"></script>
+</body>
+</html>

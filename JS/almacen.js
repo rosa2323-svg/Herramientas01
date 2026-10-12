@@ -121,3 +121,10 @@ function cambiarRolUsuario(id, rol) {
     guardarLista(CLAVE_USUARIOS, lista.map(u => (u.id === id ? { ...u, rol } : u)));
     return { ok: true };
 }
+
+function cambiarEstadoUsuario(id, activo) {
+    const lista = obtenerUsuarios();
+    if (!lista.some(u => u.id === id)) return { ok: false, error: "El usuario no existe." };
+    guardarLista(CLAVE_USUARIOS, lista.map(u => (u.id === id ? { ...u, activo } : u)));
+    return { ok: true };
+}

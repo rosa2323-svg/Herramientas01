@@ -43,6 +43,15 @@
                         aria-label="Rol de ${escaparHtml(u.nombre)}">${opciones}</select>`;
     }
 
+    // Botón que habilita o deshabilita según el estado actual
+    function botonEstado(u) {
+        return u.activo
+            ? `<button type="button" class="btn-accion btn-editar" data-accion="estado" data-id="${u.id}">
+                   <i class="bi bi-slash-circle"></i> Deshabilitar</button>`
+            : `<button type="button" class="btn-accion btn-editar" data-accion="estado" data-id="${u.id}">
+                   <i class="bi bi-check-circle"></i> Habilitar</button>`;
+    }
+
     function pintarTabla() {
         const lista = usuariosVisibles();
 
@@ -65,6 +74,7 @@
                 <td class="celda-acciones">
                     <button type="button" class="btn-accion btn-editar" data-accion="detalle" data-id="${u.id}">
                         <i class="bi bi-eye-fill"></i> Ver detalle</button>
+                    ${botonEstado(u)}
                 </td>
             </tr>`).join("");
     }
@@ -95,6 +105,19 @@
         pintarTabla(); // vuelve a pintar con el rol guardado
     }
 
+    // ----- Habilitar / deshabilitar -----
+    function alternarEstado(usuario) {
+        const activoNuevo = !usuario.activo;
+        const resultado = cambiarEstadoUsuario(usuario.id, activoNuevo);
+
+        if (resultado.ok) {
+            mostrarAviso("success", `Usuario ${activoNuevo ? "habilitado" : "deshabilitado"}: ${usuario.nombre}.`);
+        } else {
+            mostrarAviso("danger", resultado.error);
+        }
+        pintarTabla();
+    }
+
     // ----- Eventos de la tabla -----
     cuerpo.addEventListener("click", e => {
         const boton = e.target.closest("button[data-accion]");
@@ -103,6 +126,7 @@
         if (!usuario) return;
 
         if (boton.dataset.accion === "detalle") abrirDetalle(usuario);
+        if (boton.dataset.accion === "estado") alternarEstado(usuario);
     });
 
     cuerpo.addEventListener("change", e => {

@@ -1,3 +1,7 @@
+/**
+ * Módulo de la vista de administración de usuarios: tabla, búsqueda,
+ * detalle, cambio de rol, habilitar/deshabilitar y eliminación.
+ */
 (function () {
 
     // ----- Estado de la vista -----
@@ -11,14 +15,28 @@
     const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminar"));
 
     // ----- Utilidades -----
-    // 2026-02-03 -> 03/02/2026
+
+    /**
+     * Convierte una fecha ISO a formato dd/mm/aaaa (2026-02-03 -> 03/02/2026).
+     * @param {string} fecha - Fecha en formato aaaa-mm-dd.
+     * @returns {string} Fecha en formato dd/mm/aaaa.
+     */
     const formatoFecha = fecha => fecha.split("-").reverse().join("/");
 
     // ----- Filtro de búsqueda -----
-    // Ignora mayúsculas y tildes: "lucia" encuentra "Lucía"
+
+    /**
+     * Pasa un texto a minúsculas y sin tildes: "Lucía" -> "lucia".
+     * @param {*} texto - Texto a normalizar.
+     * @returns {string} Texto normalizado.
+     */
     const normalizar = texto => String(texto).toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
+    /**
+     * Devuelve los usuarios que coinciden con el texto de búsqueda (nombre, correo o rol).
+     * @returns {Array<Object>} Usuarios filtrados.
+     */
     function usuariosVisibles() {
         const t = normalizar(estado.texto.trim());
         return obtenerUsuarios().filter(u =>
@@ -29,13 +47,23 @@
     }
 
     // ----- Tabla de usuarios -----
+
+    /**
+     * Genera la insignia HTML del estado de un usuario.
+     * @param {boolean} activo - Si el usuario está activo.
+     * @returns {string} HTML de la insignia.
+     */
     function insigniaEstado(activo) {
         return activo
             ? '<span class="badge bg-success">Activo</span>'
             : '<span class="badge bg-secondary">Deshabilitado</span>';
     }
 
-    // Selector de rol de una fila (el rol actual queda seleccionado)
+    /**
+     * Genera el selector de rol de una fila (el rol actual queda seleccionado).
+     * @param {Object} u - Usuario de la fila.
+     * @returns {string} HTML del selector.
+     */
     function selectorRol(u) {
         const opciones = ROLES_USUARIO.map(rol =>
             `<option value="${escaparHtml(rol)}"${rol === u.rol ? " selected" : ""}>${escaparHtml(rol)}</option>`
@@ -44,7 +72,11 @@
                         aria-label="Rol de ${escaparHtml(u.nombre)}">${opciones}</select>`;
     }
 
-    // Botón que habilita o deshabilita según el estado actual
+    /**
+     * Genera el botón que habilita o deshabilita según el estado actual del usuario.
+     * @param {Object} u - Usuario de la fila.
+     * @returns {string} HTML del botón.
+     */
     function botonEstado(u) {
         return u.activo
             ? `<button type="button" class="btn-accion btn-editar" data-accion="estado" data-id="${u.id}">
@@ -53,6 +85,9 @@
                    <i class="bi bi-check-circle"></i> Habilitar</button>`;
     }
 
+    /**
+     * Pinta la tabla de usuarios según el filtro actual, o un mensaje si no hay resultados.
+     */
     function pintarTabla() {
         const lista = usuariosVisibles();
 
@@ -83,8 +118,13 @@
     }
 
     // ----- Detalle del usuario -----
+
+    /**
+     * Rellena y abre el modal con el detalle de un usuario.
+     * Usa textContent para evitar inyectar HTML con los datos del usuario.
+     * @param {Object} usuario - Usuario a mostrar.
+     */
     function abrirDetalle(usuario) {
-        // textContent evita inyectar HTML con los datos del usuario
         document.getElementById("detalleId").textContent = usuario.id;
         document.getElementById("detalleNombre").textContent = usuario.nombre;
         document.getElementById("detalleCorreo").textContent = usuario.correo;
@@ -96,6 +136,12 @@
     }
 
     // ----- Cambio de rol -----
+
+    /**
+     * Cambia el rol de un usuario, muestra el resultado y vuelve a pintar la tabla.
+     * @param {number} id - Id del usuario.
+     * @param {string} rolNuevo - Rol seleccionado.
+     */
     function cambiarRol(id, rolNuevo) {
         const usuario = obtenerUsuarios().find(u => u.id === id);
         const resultado = cambiarRolUsuario(id, rolNuevo);
@@ -109,6 +155,11 @@
     }
 
     // ----- Habilitar / deshabilitar -----
+
+    /**
+     * Habilita o deshabilita a un usuario según su estado actual y muestra el resultado.
+     * @param {Object} usuario - Usuario a modificar.
+     */
     function alternarEstado(usuario) {
         const activoNuevo = !usuario.activo;
         const resultado = cambiarEstadoUsuario(usuario.id, activoNuevo);
@@ -122,13 +173,21 @@
     }
 
     // ----- Eliminación con confirmación -----
+
+    /**
+     * Guarda el id del usuario y abre el modal de confirmación de eliminación.
+     * Usa textContent para evitar inyectar HTML con el nombre del usuario.
+     * @param {Object} usuario - Usuario a eliminar.
+     */
     function pedirConfirmacion(usuario) {
         idPorEliminar = usuario.id;
-        // textContent evita inyectar HTML con el nombre del usuario
         document.getElementById("nombreUsuarioEliminar").textContent = usuario.nombre;
         modalEliminar.show();
     }
 
+    /**
+     * Elimina el usuario pendiente de confirmación, muestra el resultado y vuelve a pintar la tabla.
+     */
     function confirmarEliminacion() {
         if (idPorEliminar === null) return;
         const usuario = obtenerUsuarios().find(u => u.id === idPorEliminar);
@@ -145,6 +204,8 @@
     }
 
     // ----- Eventos de la tabla -----
+
+    /** Maneja los clics de la tabla: ver detalle, alternar estado o pedir eliminación. */
     cuerpo.addEventListener("click", e => {
         const boton = e.target.closest("button[data-accion]");
         if (!boton) return;
@@ -156,6 +217,7 @@
         if (boton.dataset.accion === "eliminar") pedirConfirmacion(usuario);
     });
 
+    /** Maneja el cambio de rol desde el selector de una fila. */
     cuerpo.addEventListener("change", e => {
         const selector = e.target.closest('select[data-accion="rol"]');
         if (!selector) return;
@@ -165,11 +227,14 @@
     document.getElementById("btnConfirmarEliminar").addEventListener("click", confirmarEliminacion);
 
     // ----- Eventos de búsqueda -----
+
+    /** Filtra la tabla cada vez que se escribe en el buscador. */
     buscador.addEventListener("input", e => {
         estado.texto = e.target.value;
         pintarTabla();
     });
 
+    /** Limpia el texto de búsqueda y vuelve a mostrar todos los usuarios. */
     document.getElementById("btnLimpiar").addEventListener("click", () => {
         estado.texto = "";
         buscador.value = "";

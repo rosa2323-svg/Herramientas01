@@ -593,3 +593,40 @@ footer :focus-visible,
         padding: 1.25rem !important;
     }
 }
+
+/* Responsive: márgenes, paddings y menú móvil */
+@media (max-width: 1199.98px) {
+    .navbar-collapse .position-relative.me-3 {
+        margin-right: 0 !important;
+        margin-top: 1rem;
+    }
+    .navbar-collapse .d-flex.align-items-center {
+        margin-top: 1rem !important;
+    }
+    .navbar-nav .nav-link.px-4 {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+    .navbar-brand {
+        font-size: 1.25rem !important;
+        letter-spacing: 2px !important;
+    }
+    main .py-5 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+    main .my-5 {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    .display-4 {
+        font-size: var(--fs-2xl);
+        letter-spacing: 1px !important;
+    }
+}

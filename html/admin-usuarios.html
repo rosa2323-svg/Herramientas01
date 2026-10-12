@@ -47,13 +47,50 @@
                 <th>Correo</th>
                 <th>Rol</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody id="cuerpoTabla"></tbody>
         </table>
     </div>
 </main>
+<div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="tituloModalDetalle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModalDetalle">Detalle del usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">ID</dt>
+                    <dd class="col-sm-8" id="detalleId"></dd>
 
+                    <dt class="col-sm-4">Nombre</dt>
+                    <dd class="col-sm-8" id="detalleNombre"></dd>
+
+                    <dt class="col-sm-4">Correo</dt>
+                    <dd class="col-sm-8" id="detalleCorreo"></dd>
+
+                    <dt class="col-sm-4">Teléfono</dt>
+                    <dd class="col-sm-8" id="detalleTelefono"></dd>
+
+                    <dt class="col-sm-4">Rol</dt>
+                    <dd class="col-sm-8" id="detalleRol"></dd>
+
+                    <dt class="col-sm-4">Estado</dt>
+                    <dd class="col-sm-8" id="detalleEstado"></dd>
+
+                    <dt class="col-sm-4">Registro</dt>
+                    <dd class="col-sm-8 mb-0" id="detalleFecha"></dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../JS/productos.js"></script>
 <script src="../JS/usuarios-datos.js"></script>

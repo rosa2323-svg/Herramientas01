@@ -180,3 +180,11 @@
     .admin-encabezado { align-items: flex-start; }
     .admin-encabezado .btn { width: 100%; }
 }
+.modal-backdrop {
+    display: none !important;
+}
+.modal-content {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}

@@ -16,3 +16,5 @@ const USUARIOS_INICIALES = [
     { id: 11, nombre: "Sofía Huamán",      correo: "sofia.huaman@example.com",       telefono: "927 905 143", rol: "Cliente",       activo: true,  fechaRegistro: "2026-06-05" },
     { id: 12, nombre: "Luis Ramírez",      correo: "luis.ramirez@example.com",       telefono: "989 472 650", rol: "Cliente",       activo: false, fechaRegistro: "2026-07-16" }
 ];
+// ----- Clave de almacenamiento -----
+const CLAVE_USUARIOS = "mastertech_usuarios";

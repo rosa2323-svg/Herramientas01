@@ -109,3 +109,7 @@ function eliminarCategoria(id) {
     guardarLista(CLAVE_CATEGORIAS, lista.filter(c => c.id !== id));
     return { ok: true };
 }
+
+function obtenerUsuarios() {
+    return leerLista(CLAVE_USUARIOS, USUARIOS_INICIALES);
+}

@@ -113,3 +113,11 @@ function eliminarCategoria(id) {
 function obtenerUsuarios() {
     return leerLista(CLAVE_USUARIOS, USUARIOS_INICIALES);
 }
+
+function cambiarRolUsuario(id, rol) {
+    if (!ROLES_USUARIO.includes(rol)) return { ok: false, error: "Rol no válido." };
+    const lista = obtenerUsuarios();
+    if (!lista.some(u => u.id === id)) return { ok: false, error: "El usuario no existe." };
+    guardarLista(CLAVE_USUARIOS, lista.map(u => (u.id === id ? { ...u, rol } : u)));
+    return { ok: true };
+}

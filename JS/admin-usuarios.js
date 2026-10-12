@@ -34,6 +34,15 @@
             : '<span class="badge bg-secondary">Deshabilitado</span>';
     }
 
+    // Selector de rol de una fila (el rol actual queda seleccionado)
+    function selectorRol(u) {
+        const opciones = ROLES_USUARIO.map(rol =>
+            `<option value="${escaparHtml(rol)}"${rol === u.rol ? " selected" : ""}>${escaparHtml(rol)}</option>`
+        ).join("");
+        return `<select class="form-select form-select-sm w-auto" data-accion="rol" data-id="${u.id}"
+                        aria-label="Rol de ${escaparHtml(u.nombre)}">${opciones}</select>`;
+    }
+
     function pintarTabla() {
         const lista = usuariosVisibles();
 
@@ -51,7 +60,7 @@
                 <td class="texto-tenue">${u.id}</td>
                 <td class="fw-semibold">${escaparHtml(u.nombre)}</td>
                 <td>${escaparHtml(u.correo)}</td>
-                <td><span class="etiqueta-categoria">${escaparHtml(u.rol)}</span></td>
+                <td>${selectorRol(u)}</td>
                 <td>${insigniaEstado(u.activo)}</td>
                 <td class="celda-acciones">
                     <button type="button" class="btn-accion btn-editar" data-accion="detalle" data-id="${u.id}">
@@ -73,6 +82,19 @@
         modalDetalle.show();
     }
 
+    // ----- Cambio de rol -----
+    function cambiarRol(id, rolNuevo) {
+        const usuario = obtenerUsuarios().find(u => u.id === id);
+        const resultado = cambiarRolUsuario(id, rolNuevo);
+
+        if (resultado.ok) {
+            mostrarAviso("success", `Rol de ${usuario.nombre} actualizado a ${rolNuevo}.`);
+        } else {
+            mostrarAviso("danger", resultado.error);
+        }
+        pintarTabla(); // vuelve a pintar con el rol guardado
+    }
+
     // ----- Eventos de la tabla -----
     cuerpo.addEventListener("click", e => {
         const boton = e.target.closest("button[data-accion]");
@@ -81,6 +103,12 @@
         if (!usuario) return;
 
         if (boton.dataset.accion === "detalle") abrirDetalle(usuario);
+    });
+
+    cuerpo.addEventListener("change", e => {
+        const selector = e.target.closest('select[data-accion="rol"]');
+        if (!selector) return;
+        cambiarRol(Number(selector.dataset.id), selector.value);
     });
 
     // ----- Eventos de búsqueda -----

@@ -1,13 +1,14 @@
-// ===== ADMINISTRACIÓN DE USUARIOS =====
 (function () {
 
     // ----- Estado de la vista -----
     const estado = { texto: "" };
+    let idPorEliminar = null;
 
     // ----- Elementos de la página -----
     const cuerpo = document.getElementById("cuerpoTabla");
     const buscador = document.getElementById("buscador");
     const modalDetalle = new bootstrap.Modal(document.getElementById("modalDetalle"));
+    const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminar"));
 
     // ----- Utilidades -----
     // 2026-02-03 -> 03/02/2026
@@ -75,6 +76,8 @@
                     <button type="button" class="btn-accion btn-editar" data-accion="detalle" data-id="${u.id}">
                         <i class="bi bi-eye-fill"></i> Ver detalle</button>
                     ${botonEstado(u)}
+                    <button type="button" class="btn-accion btn-borrar" data-accion="eliminar" data-id="${u.id}">
+                        <i class="bi bi-trash-fill"></i> Eliminar</button>
                 </td>
             </tr>`).join("");
     }
@@ -118,6 +121,29 @@
         pintarTabla();
     }
 
+    // ----- Eliminación con confirmación -----
+    function pedirConfirmacion(usuario) {
+        idPorEliminar = usuario.id;
+        // textContent evita inyectar HTML con el nombre del usuario
+        document.getElementById("nombreUsuarioEliminar").textContent = usuario.nombre;
+        modalEliminar.show();
+    }
+
+    function confirmarEliminacion() {
+        if (idPorEliminar === null) return;
+        const usuario = obtenerUsuarios().find(u => u.id === idPorEliminar);
+        const resultado = eliminarUsuario(idPorEliminar);
+        idPorEliminar = null;
+        modalEliminar.hide();
+
+        if (resultado.ok) {
+            mostrarAviso("success", `Usuario eliminado: ${usuario.nombre}.`);
+        } else {
+            mostrarAviso("danger", resultado.error);
+        }
+        pintarTabla();
+    }
+
     // ----- Eventos de la tabla -----
     cuerpo.addEventListener("click", e => {
         const boton = e.target.closest("button[data-accion]");
@@ -127,6 +153,7 @@
 
         if (boton.dataset.accion === "detalle") abrirDetalle(usuario);
         if (boton.dataset.accion === "estado") alternarEstado(usuario);
+        if (boton.dataset.accion === "eliminar") pedirConfirmacion(usuario);
     });
 
     cuerpo.addEventListener("change", e => {
@@ -134,6 +161,8 @@
         if (!selector) return;
         cambiarRol(Number(selector.dataset.id), selector.value);
     });
+
+    document.getElementById("btnConfirmarEliminar").addEventListener("click", confirmarEliminacion);
 
     // ----- Eventos de búsqueda -----
     buscador.addEventListener("input", e => {

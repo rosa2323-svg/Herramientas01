@@ -128,3 +128,10 @@ function cambiarEstadoUsuario(id, activo) {
     guardarLista(CLAVE_USUARIOS, lista.map(u => (u.id === id ? { ...u, activo } : u)));
     return { ok: true };
 }
+
+function eliminarUsuario(id) {
+    const lista = obtenerUsuarios();
+    if (!lista.some(u => u.id === id)) return { ok: false, error: "El usuario no existe." };
+    guardarLista(CLAVE_USUARIOS, lista.filter(u => u.id !== id));
+    return { ok: true };
+}

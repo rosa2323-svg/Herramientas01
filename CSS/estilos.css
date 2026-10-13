@@ -630,3 +630,18 @@ footer :focus-visible,
         letter-spacing: 1px !important;
     }
 }
+
+/* Responsive: etiqueta de stock en tarjetas de producto */
+@media (max-width: 991.98px) {
+    .tarjeta-producto .p-3 {
+        padding: 0.5rem 0 !important;
+    }
+    .tarjeta-producto .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.4rem;
+    }
+    .tarjeta-producto-precio {
+        white-space: nowrap;
+    }
+}

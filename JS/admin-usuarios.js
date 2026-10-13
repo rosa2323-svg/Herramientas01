@@ -36,7 +36,7 @@
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     /**
-     * Devuelve los usuarios que coinciden con el texto de búsqueda (nombre, correo o rol),
+     * Devuelve los usuarios que coinciden con el texto de búsqueda (nombre o correo),
      * el rol elegido y el estado elegido. Los tres filtros se combinan.
      * @returns {Array<Object>} Usuarios filtrados.
      */
@@ -45,8 +45,7 @@
         return obtenerUsuarios().filter(u => {
             const coincideTexto = !t ||
                 normalizar(u.nombre).includes(t) ||
-                normalizar(u.correo).includes(t) ||
-                normalizar(u.rol).includes(t);
+                normalizar(u.correo).includes(t);
             const coincideRol = !estado.rol || u.rol === estado.rol;
             const coincideEstado = !estado.estado ||
                 (estado.estado === "activo" ? u.activo : !u.activo);

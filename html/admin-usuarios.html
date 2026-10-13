@@ -35,6 +35,17 @@
     <div id="avisos"></div>
     <div class="barra-herramientas">
         <input type="search" id="buscador" class="form-control" placeholder="Buscar por nombre o correo" aria-label="Buscar usuarios">
+        <select id="filtroRol" class="form-select w-auto" aria-label="Filtrar por rol">
+            <option value="">Todos los roles</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Vendedor">Vendedor</option>
+            <option value="Cliente">Cliente</option>
+        </select>
+        <select id="filtroEstado" class="form-select w-auto" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option value="activo">Activo</option>
+            <option value="deshabilitado">Deshabilitado</option>
+        </select>
         <button type="button" id="btnLimpiar" class="btn btn-outline-secondary">
             <i class="bi bi-x-lg me-1"></i>Limpiar
         </button>

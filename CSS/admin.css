@@ -188,3 +188,11 @@
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
 }
+.barra-herramientas {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+.barra-herramientas input[type="search"] {
+    flex: 1 1 250px;
+}

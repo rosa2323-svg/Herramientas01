@@ -5,12 +5,14 @@
 (function () {
 
     // ----- Estado de la vista -----
-    const estado = { texto: "" };
+    const estado = { texto: "", rol: "", estado: "" };
     let idPorEliminar = null;
 
     // ----- Elementos de la página -----
     const cuerpo = document.getElementById("cuerpoTabla");
     const buscador = document.getElementById("buscador");
+    const filtroRol = document.getElementById("filtroRol");
+    const filtroEstado = document.getElementById("filtroEstado");
     const modalDetalle = new bootstrap.Modal(document.getElementById("modalDetalle"));
     const modalEliminar = new bootstrap.Modal(document.getElementById("modalEliminar"));
 
@@ -34,16 +36,22 @@
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
     /**
-     * Devuelve los usuarios que coinciden con el texto de búsqueda (nombre, correo o rol).
+     * Devuelve los usuarios que coinciden con el texto de búsqueda (nombre, correo o rol),
+     * el rol elegido y el estado elegido. Los tres filtros se combinan.
      * @returns {Array<Object>} Usuarios filtrados.
      */
     function usuariosVisibles() {
         const t = normalizar(estado.texto.trim());
-        return obtenerUsuarios().filter(u =>
-            !t ||
-            normalizar(u.nombre).includes(t) ||
-            normalizar(u.correo).includes(t) ||
-            normalizar(u.rol).includes(t));
+        return obtenerUsuarios().filter(u => {
+            const coincideTexto = !t ||
+                normalizar(u.nombre).includes(t) ||
+                normalizar(u.correo).includes(t) ||
+                normalizar(u.rol).includes(t);
+            const coincideRol = !estado.rol || u.rol === estado.rol;
+            const coincideEstado = !estado.estado ||
+                (estado.estado === "activo" ? u.activo : !u.activo);
+            return coincideTexto && coincideRol && coincideEstado;
+        });
     }
 
     // ----- Tabla de usuarios -----
@@ -226,7 +234,7 @@
 
     document.getElementById("btnConfirmarEliminar").addEventListener("click", confirmarEliminacion);
 
-    // ----- Eventos de búsqueda -----
+// ----- Eventos de búsqueda y filtros -----
 
     /** Filtra la tabla cada vez que se escribe en el buscador. */
     buscador.addEventListener("input", e => {
@@ -234,10 +242,26 @@
         pintarTabla();
     });
 
-    /** Limpia el texto de búsqueda y vuelve a mostrar todos los usuarios. */
+    /** Filtra la tabla al elegir un rol en el desplegable. */
+    filtroRol.addEventListener("change", e => {
+        estado.rol = e.target.value;
+        pintarTabla();
+    });
+
+    /** Filtra la tabla al elegir un estado en el desplegable. */
+    filtroEstado.addEventListener("change", e => {
+        estado.estado = e.target.value;
+        pintarTabla();
+    });
+
+    /** Limpia el texto y los dos desplegables, y vuelve a mostrar todos los usuarios. */
     document.getElementById("btnLimpiar").addEventListener("click", () => {
         estado.texto = "";
+        estado.rol = "";
+        estado.estado = "";
         buscador.value = "";
+        filtroRol.value = "";
+        filtroEstado.value = "";
         pintarTabla();
     });
 

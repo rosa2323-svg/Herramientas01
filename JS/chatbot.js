@@ -220,7 +220,7 @@
     }
 
     function reiniciarConversacion() {
-        localStorage.removeItem(CONFIG.CLAVE_HISTORIAL);
+        try { localStorage.removeItem(CONFIG.CLAVE_HISTORIAL); } catch { /* almacenamiento no disponible */ }
         historial = [];
         document.getElementById('chatbotMensajes').innerHTML = '';
         agregarMensaje(MENSAJE_BIENVENIDA, 'bot');

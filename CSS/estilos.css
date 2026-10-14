@@ -547,7 +547,7 @@ footer :focus-visible,
 }
 
 /* ===== Términos y Condiciones ===== */
-.legal-banner { background: linear-gradient(135deg, #212529 0%, #dc3545 100%); }
+.legal-banner { background: linear-gradient(135deg, var(--color-oscuro) 0%, var(--color-secundario) 100%); }
 .legal-texto { max-width: 70ch; line-height: 1.7; }
 
 /* Acordeón */

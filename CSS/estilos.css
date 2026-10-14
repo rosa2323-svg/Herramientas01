@@ -574,26 +574,6 @@ footer :focus-visible,
     }
 }
 
-/* Responsive: Registro */
-@media (min-width: 768px) and (max-width: 991.98px) {
-    #registro-main .col-md-10 {
-        width: 100%;
-    }
-    #registro-main .p-md-5 {
-        padding: 2rem !important;
-    }
-}
-
-@media (max-width: 575.98px) {
-    #registro-main {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-    }
-    #registro-main .p-4 {
-        padding: 1.25rem !important;
-    }
-}
-
 /* Responsive: márgenes, paddings y menú móvil */
 @media (max-width: 1199.98px) {
     .navbar-collapse .position-relative.me-3 {
@@ -642,6 +622,7 @@ footer :focus-visible,
         gap: 0.4rem;
     }
     .tarjeta-producto-precio {
-        white-space: nowrap;
+        white-space: normal;
+        overflow-wrap: anywhere;
     }
 }

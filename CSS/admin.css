@@ -5,6 +5,7 @@
     --color-fondo:         #0a0a0f;
     --color-superficie:    #12121a;
     --color-borde:         #1e1e2e;
+    --color-borde-control: #6b6b85;
     --color-acento:        #e63946;
     --color-acento-claro:  #ff6b6b;
     --color-acento-oscuro: #c1121f;
@@ -110,7 +111,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .modal .form-select {
     background-color: var(--campo-bg);
     color: var(--color-texto);
-    border: 1px solid var(--color-borde);
+    border: 1px solid var(--color-borde-control);
     border-radius: 8px;
     color-scheme: dark;
     transition: border-color 0.2s;
@@ -148,7 +149,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .barra-herramientas .btn-outline-secondary,
 .modal .btn-outline-secondary {
     background: transparent;
-    border: 1px solid var(--color-borde);
+    border: 1px solid var(--color-borde-control);
     color: var(--color-texto);
     font-family: var(--fuente-sans), sans-serif;
     font-weight: 600;
@@ -156,7 +157,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     transition: all 0.2s;
 }
 .barra-herramientas .btn-outline-secondary:hover,
-.modal .btn-outline-secondary:hover { background: transparent; border-color: var(--color-acento); color: var(--color-acento); }
+.modal .btn-outline-secondary:hover { background: transparent; border-color: var(--color-acento); color: var(--color-acento-claro); }
 
 /* Herramientas */
 .barra-herramientas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.75rem; }
@@ -369,11 +370,11 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 #filtroDias .btn-outline-dark {
     background: transparent;
     color: var(--color-texto);
-    border-color: var(--color-borde);
+    border-color: var(--color-borde-control);
     font-weight: 600;
     transition: all 0.2s;
 }
-#filtroDias .btn-outline-dark:hover { background: transparent; border-color: var(--color-acento); color: var(--color-acento); }
+#filtroDias .btn-outline-dark:hover { background: transparent; border-color: var(--color-acento); color: var(--color-acento-claro); }
 #filtroDias .btn-outline-dark.active,
 #filtroDias .btn-outline-dark[aria-pressed="true"] { background: var(--color-boton); border-color: var(--color-boton); color: #fff; }
 

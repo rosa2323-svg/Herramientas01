@@ -2,17 +2,18 @@
 
 /* Variables */
 :root {
-    --color-fondo:        #0a0a0f;
-    --color-superficie:   #12121a;
-    --color-borde:        #1e1e2e;
-    --color-acento:       #e63946;
-    --color-acento-claro: #ff6b6b;
-    --color-texto:        #e8e8f0;
-    --color-tenue:        #6b6b85;
-    --color-exito:        #06d6a0;
-    --color-aviso:        #ffd166;
-    --fuente-mono:        Consolas, 'Courier New', monospace;
-    --fuente-sans:        system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --color-fondo:         #0a0a0f;
+    --color-superficie:    #12121a;
+    --color-borde:         #1e1e2e;
+    --color-acento:        #e63946;
+    --color-acento-claro:  #ff6b6b;
+    --color-acento-oscuro: #c1121f;
+    --color-texto:         #e8e8f0;
+    --color-tenue:         #9090a8;
+    --color-exito:         #06d6a0;
+    --color-aviso:         #ffd166;
+    --fuente-mono:         Consolas, 'Courier New', monospace;
+    --fuente-sans:         system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 
     /* Tonos translúcidos para fondo y borde de etiquetas, botones y alertas */
     --color-acento-suave: rgba(230, 57, 70, 0.1);
@@ -23,7 +24,7 @@
     --color-exito-borde:  rgba(6, 214, 160, 0.25);
 }
 
-body { background: var(--color-fondo); color: var(--color-texto); font-family: var(--fuente-sans); min-height: 100vh; }
+body { background: var(--color-fondo); color: var(--color-texto); font-family: var(--fuente-sans), sans-serif; min-height: 100vh; }
 
 /* Navegación */
 .admin-barra {
@@ -61,7 +62,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     margin-bottom: 2rem;
 }
 .admin-titulo { margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--color-texto); }
-.admin-subtitulo { margin: 0.3rem 0 0; color: var(--color-tenue); font-size: 0.9rem; font-family: var(--fuente-mono); }
+.admin-subtitulo { margin: 0.3rem 0 0; color: var(--color-tenue); font-size: 0.9rem; font-family: var(--fuente-mono), monospace; }
 
 /* Métricas */
 .tarjetas-metricas { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; margin-bottom: 1.75rem; }
@@ -75,7 +76,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     justify-content: center;
 }
 .metrica-valor {
-    font-family: var(--fuente-mono);
+    font-family: var(--fuente-mono), monospace;
     font-size: 1.6rem;
     font-weight: 700;
     line-height: 1.1;
@@ -88,7 +89,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 /* Texto pequeño en mayúsculas de métricas y etiquetas de formulario */
 .metrica-etiqueta,
 .modal .form-label {
-    font-family: var(--fuente-mono);
+    font-family: var(--fuente-mono), monospace;
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -128,7 +129,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     background: var(--color-acento);
     border: 1px solid var(--color-acento);
     color: #fff;
-    font-family: var(--fuente-sans);
+    font-family: var(--fuente-sans), sans-serif;
     font-weight: 700;
     border-radius: 8px;
     transition: background 0.2s, border-color 0.2s;
@@ -136,14 +137,14 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .btn-mastertech:hover,
 .btn-mastertech:focus,
 .modal .btn-primary:hover,
-.modal .btn-danger:hover { background: var(--color-acento-claro); border-color: var(--color-acento-claro); color: #fff; }
+.modal .btn-danger:hover { background: var(--color-acento-oscuro); border-color: var(--color-acento-oscuro); color: #fff; }
 
 .barra-herramientas .btn-outline-secondary,
 .modal .btn-outline-secondary {
     background: transparent;
     border: 1px solid var(--color-borde);
     color: var(--color-texto);
-    font-family: var(--fuente-sans);
+    font-family: var(--fuente-sans), sans-serif;
     font-weight: 600;
     border-radius: 8px;
     transition: all 0.2s;
@@ -153,7 +154,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 
 /* Herramientas */
 .barra-herramientas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.75rem; }
-.barra-herramientas .form-control { flex: 1; min-width: 220px; padding: 0.65rem 1rem; font-family: var(--fuente-mono); font-size: 0.85rem; }
+.barra-herramientas .form-control { flex: 1; min-width: 220px; padding: 0.65rem 1rem; font-family: var(--fuente-mono), monospace; font-size: 0.85rem; }
 .barra-herramientas .btn-outline-warning {
     background: var(--color-aviso-suave);
     color: var(--color-aviso);
@@ -178,7 +179,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     background: var(--color-borde);
     color: var(--color-tenue);
     border: 0;
-    font-family: var(--fuente-mono);
+    font-family: var(--fuente-mono), monospace;
     font-size: 0.75rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -200,7 +201,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .tabla-admin .fila-agotada { background: rgba(230, 57, 70, 0.08); }
 
 .texto-tenue { color: var(--color-tenue); }
-.precio-admin { font-family: var(--fuente-mono); font-weight: 700; font-size: 0.95rem; color: var(--color-exito); white-space: nowrap; }
+.precio-admin { font-family: var(--fuente-mono), monospace; font-weight: 700; font-size: 0.95rem; color: var(--color-exito); white-space: nowrap; }
 .celda-acciones { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 /* Columnas ordenables */
@@ -239,7 +240,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     text-align: center;
     border: 1px solid transparent;
     border-radius: 100px;
-    font-family: var(--fuente-mono);
+    font-family: var(--fuente-mono), monospace;
     font-size: 0.72rem;
     font-weight: 700;
 }
@@ -251,7 +252,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     padding: 0.32rem 0.75rem;
     border: 1px solid transparent;
     border-radius: 6px;
-    font-family: var(--fuente-sans);
+    font-family: var(--fuente-sans), sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
@@ -273,7 +274,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .tabla-admin .badge.bg-success { background-color: var(--color-exito-suave) !important; color: var(--color-exito) !important; border-color: var(--color-exito-borde); }
 
 /* Estado vacío */
-.vacio { padding: 4rem 1rem; text-align: center; color: var(--color-tenue); font-family: var(--fuente-mono); font-size: 0.85rem; }
+.vacio { padding: 4rem 1rem; text-align: center; color: var(--color-tenue); font-family: var(--fuente-mono), monospace; font-size: 0.85rem; }
 .vacio .bi { display: block; margin-bottom: 0.75rem; font-size: 2.5rem; opacity: 0.3; }
 
 /* Avisos */
@@ -307,7 +308,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 
 .modal .form-label { margin-bottom: 0.4rem; }
 .modal .form-control,
-.modal .form-select { padding: 0.7rem 1rem; font-family: var(--fuente-sans); font-size: 0.9rem; }
+.modal .form-select { padding: 0.7rem 1rem; font-family: var(--fuente-sans), sans-serif; font-size: 0.9rem; }
 .modal textarea.form-control { resize: vertical; min-height: 80px; }
 .modal .form-select {
     cursor: pointer;
@@ -341,7 +342,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 }
 .detalle-item:first-child { border-top: 0; }
 .detalle-cant { font-weight: 700; color: var(--color-acento); margin-right: 0.5rem; }
-.detalle-precio { font-family: var(--fuente-mono); font-weight: 600; color: #fff; white-space: nowrap; }
+.detalle-precio { font-family: var(--fuente-mono), monospace; font-weight: 600; color: #fff; white-space: nowrap; }
 
 /* Dashboard (tarjetas y filtro de días) */
 .card.shadow-sm {
@@ -377,6 +378,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     .modal .modal-footer { padding: 1.25rem 1rem; }
 }
 @media (max-width: 576px) {
+    .tarjetas-metricas { grid-template-columns: 1fr; }
     .admin-titulo { font-size: 1.6rem; }
     .admin-encabezado .btn { width: 100%; }
 }

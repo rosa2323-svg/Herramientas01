@@ -8,6 +8,7 @@
     --color-acento:        #e63946;
     --color-acento-claro:  #ff6b6b;
     --color-acento-oscuro: #c1121f;
+    --color-boton:         #d62839;
     --color-texto:         #e8e8f0;
     --color-tenue:         #9090a8;
     --color-exito:         #06d6a0;
@@ -99,9 +100,12 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 
 /* Campos de buscador y formularios del modal */
 .barra-herramientas { --campo-bg: var(--color-superficie); }
+.tabla-admin { --campo-bg: var(--color-fondo); }
 .modal { --campo-bg: var(--color-fondo); }
 
 .barra-herramientas .form-control,
+.barra-herramientas .form-select,
+.tabla-admin .form-select,
 .modal .form-control,
 .modal .form-select {
     background-color: var(--campo-bg);
@@ -112,6 +116,8 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
     transition: border-color 0.2s;
 }
 .barra-herramientas .form-control:focus,
+.barra-herramientas .form-select:focus,
+.tabla-admin .form-select:focus,
 .modal .form-control:focus,
 .modal .form-select:focus {
     background-color: var(--campo-bg);
@@ -126,8 +132,8 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .btn-mastertech,
 .modal .btn-primary,
 .modal .btn-danger {
-    background: var(--color-acento);
-    border: 1px solid var(--color-acento);
+    background: var(--color-boton);
+    border: 1px solid var(--color-boton);
     color: #fff;
     font-family: var(--fuente-sans), sans-serif;
     font-weight: 700;
@@ -272,6 +278,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .tabla-admin .badge.bg-danger  { background-color: var(--color-acento-suave) !important;  color: var(--color-acento-claro) !important;  border-color: var(--color-acento-borde); }
 .tabla-admin .badge.bg-warning { background-color: var(--color-aviso-suave) !important; color: var(--color-aviso) !important; border-color: var(--color-aviso-borde); }
 .tabla-admin .badge.bg-success { background-color: var(--color-exito-suave) !important; color: var(--color-exito) !important; border-color: var(--color-exito-borde); }
+.tabla-admin .badge.bg-secondary { background-color: rgba(144, 144, 168, 0.12) !important; color: var(--color-tenue) !important; border-color: rgba(144, 144, 168, 0.3); }
 
 /* Estado vacío */
 .vacio { padding: 4rem 1rem; text-align: center; color: var(--color-tenue); font-family: var(--fuente-mono), monospace; font-size: 0.85rem; }
@@ -310,11 +317,15 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 .modal .form-control,
 .modal .form-select { padding: 0.7rem 1rem; font-family: var(--fuente-sans), sans-serif; font-size: 0.9rem; }
 .modal textarea.form-control { resize: vertical; min-height: 80px; }
-.modal .form-select {
+.modal .form-select,
+.barra-herramientas .form-select,
+.tabla-admin .form-select {
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b6b85' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239090a8' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
 }
-.modal .form-select option { background: #1a1a28; color: var(--color-texto); }
+.modal .form-select option,
+.barra-herramientas .form-select option,
+.tabla-admin .form-select option { background: #1a1a28; color: var(--color-texto); }
 .modal .form-text { color: var(--color-tenue); }
 .modal .invalid-feedback { color: var(--color-acento-claro); }
 .modal .btn { padding: 0.65rem 1.4rem; }
@@ -364,7 +375,7 @@ body { background: var(--color-fondo); color: var(--color-texto); font-family: v
 }
 #filtroDias .btn-outline-dark:hover { background: transparent; border-color: var(--color-acento); color: var(--color-acento); }
 #filtroDias .btn-outline-dark.active,
-#filtroDias .btn-outline-dark[aria-pressed="true"] { background: var(--color-acento); border-color: var(--color-acento); color: #fff; }
+#filtroDias .btn-outline-dark[aria-pressed="true"] { background: var(--color-boton); border-color: var(--color-boton); color: #fff; }
 
 /* Responsive */
 @media (max-width: 768px) {

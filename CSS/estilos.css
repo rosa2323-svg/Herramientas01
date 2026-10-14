@@ -545,3 +545,44 @@ footer :focus-visible,
     color: var(--color-claro);
     border-bottom: 2px solid var(--color-secundario);
 }
+
+/* ===== Términos y Condiciones ===== */
+.legal-banner { background: linear-gradient(135deg, #212529 0%, #dc3545 100%); }
+.legal-texto { max-width: 70ch; line-height: 1.7; }
+
+/* Acordeón */
+.legal-acordeon .accordion-item {
+    border: 1px solid #dee2e6;
+    border-radius: .5rem !important;
+    margin-bottom: .75rem;
+    overflow: hidden;
+    background: #fff;
+}
+.legal-acordeon .accordion-button {
+    background: #f8f9fa;
+    color: #212529;
+    font-weight: 700;
+    padding: 1.25rem 1.5rem;
+    box-shadow: none;
+}
+.legal-acordeon .accordion-button:not(.collapsed) {
+    background: #f8f9fa;
+    color: #212529;
+    border-left: 4px solid #dc3545;
+    border-bottom: 1px solid #dee2e6;
+}
+/* Flecha en círculo */
+.legal-acordeon .accordion-button::after,
+.legal-acordeon .accordion-button:not(.collapsed)::after {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #9a9a9a;
+    background-size: 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+.legal-acordeon .accordion-button:not(.collapsed)::after { background-color: #212529; }
+.legal-acordeon .accordion-body { padding: 1.5rem; }

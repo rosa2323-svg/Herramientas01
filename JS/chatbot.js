@@ -305,14 +305,24 @@
         const formulario = document.getElementById('chatbotFormulario');
         const entrada = document.getElementById('chatbotEntrada');
 
+        // Modo flotante: el panel arranca cerrado, así que sus controles no deben ser enfocables.
+        // En modo página (enPagina) el panel está siempre visible y no se toca.
+        if (!enPagina) panel.inert = true;
+
         function abrir() {
+            panel.inert = false;          // primero habilitar, para poder enfocar la entrada
             panel.classList.add('abierto');
             boton.classList.add('oculto');
+            boton.inert = true;           // el botón oculto no debe recibir foco
             entrada.focus();
         }
         function cerrar() {
+            if (!panel.classList.contains('abierto')) return;
             panel.classList.remove('abierto');
+            panel.inert = true;           // saca del orden de tabulación el campo y los botones
             boton.classList.remove('oculto');
+            boton.inert = false;
+            boton.focus();                // devuelve el foco al botón de apertura
         }
 
         boton.addEventListener('click', abrir);

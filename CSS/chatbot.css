@@ -24,6 +24,8 @@
 .chatbot-boton.oculto {
     transform: scale(0);
     pointer-events: none;
+    visibility: hidden;
+    transition: transform 0.2s, background 0.2s, visibility 0s linear 0.2s;
 }
 
 .chatbot-panel {
@@ -45,13 +47,16 @@
     opacity: 0;
     transform: translateY(20px) scale(0.97);
     pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
+    visibility: hidden;
+    transition: opacity 0.2s, transform 0.2s, visibility 0s linear 0.2s;
 }
 
 .chatbot-panel.abierto {
     opacity: 1;
     transform: none;
     pointer-events: auto;
+    visibility: visible;
+    transition: opacity 0.2s, transform 0.2s, visibility 0s;
 }
 
 /* Cabecera */

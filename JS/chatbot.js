@@ -377,7 +377,7 @@
         }
     }
 
-    // ---------- Inicio ----------
+// ---------- Inicio ----------
 
     /**
      * Inicializa los componentes, eventos y estado inicial del chatbot.
@@ -392,11 +392,18 @@
         if (!enPagina) panel.inert = true;
 
         function abrir() {
-            panel.inert = false;          // primero habilitar, para poder enfocar la entrada
+            panel.inert = false;          // primero habilitar, para poder enfocar
             panel.classList.add('abierto');
             boton.classList.add('oculto');
             boton.inert = true;           // el botón oculto no debe recibir foco
-            entrada.focus();
+
+            // Si está esperando respuesta, el input está deshabilitado; enfocamos el contenedor o el botón de limpiar para evitar errores de foco
+            if (esperandoRespuesta) {
+                const btnLimpiar = document.getElementById('chatbotLimpiar');
+                if (btnLimpiar) btnLimpiar.focus();
+            } else {
+                entrada.focus();
+            }
         }
         function cerrar() {
             if (!panel.classList.contains('abierto')) return;

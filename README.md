@@ -24,10 +24,13 @@ Master-tech-frontend/
 ├── .idea/
 ├── CSS/
 │   ├── admin.css
+│   ├── chatbot.css
 │   └── estilos.css
 ├── html/
 │   ├── admin-categorias.html
+│   ├── admin-dashboard.html
 │   ├── admin-productos.html
+│   ├── admin-usuarios.html
 │   ├── admin-ventas.html
 │   ├── carrito.html
 │   ├── categoria.html
@@ -36,23 +39,29 @@ Master-tech-frontend/
 │   ├── perfil.html
 │   ├── producto.html
 │   ├── registro.html
-│   └── resultados-busqueda.html
+│   ├── resultados-busqueda.html
+│   └── terminos.html
 ├── Imagenes/
 ├── JS/
 │   ├── admin-categorias.js
 │   ├── admin-comun.js
+│   ├── admin-dashboard.js
 │   ├── admin-productos.js
+│   ├── admin-usuarios.js
 │   ├── admin-ventas.js
 │   ├── almacen.js
 │   ├── buscador.js
 │   ├── carrito.js
 │   ├── categoria.js
+│   ├── chatbot.js
+│   ├── dashboard-datos.js
 │   ├── emergente.js
 │   ├── perfil.js
 │   ├── producto.js
 │   ├── productos.js
 │   ├── renderizado.js
-│   └── solicitarlogin.js
+│   ├── solicitarlogin.js
+│   └── usuarios-datos.js
 ├── .coderabbit.yaml
 ├── index.html
 └── README.md

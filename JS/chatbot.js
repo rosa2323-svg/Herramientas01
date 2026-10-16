@@ -220,6 +220,11 @@
         historial = copia;
     }
 
+    /**
+     * Reinicia la conversación: invalida cualquier respuesta pendiente,
+     * borra el historial guardado y vuelve a mostrar el mensaje de bienvenida.
+     * @returns {void}
+     */
     function reiniciarConversacion() {
         idConversacion++;
         try { localStorage.removeItem(CONFIG.CLAVE_HISTORIAL); } catch { /* almacenamiento no disponible */ }
@@ -273,13 +278,24 @@
     }
 
     // Punto de reemplazo: de momento responde en simulado; luego se cambia por la llamada a la IA.
+    /**
+     * Obtiene la respuesta del asistente para el mensaje del usuario.
+     * Por ahora es simulada; es el punto de reemplazo para conectar la IA real.
+     * @param {string} texto - Mensaje del usuario.
+     * @returns {Promise<{texto: string, productos?: Object[]}>} Respuesta del asistente.
+     */
     async function obtenerRespuesta(texto) {
         await new Promise(r => setTimeout(r, CONFIG.RETARDO_SIMULADO_MS));
         return responderSimulado(texto);
     }
 
     // ---------- Flujo de envío ----------
-
+    /**
+     * Envía el mensaje del usuario y muestra la respuesta del asistente.
+     * Descarta la respuesta si la conversación se reinició mientras se esperaba.
+     * @param {string} texto - Mensaje escrito por el usuario.
+     * @returns {Promise<void>}
+     */
     async function enviarMensaje(texto) {
         texto = texto.trim();
         if (!texto || esperandoRespuesta) return;

@@ -50,15 +50,38 @@
         document.getElementById("kpiNuevos").textContent = totalNuevos.toLocaleString("es-PE");
     }
 
-    // Gráficos de Chart.js ---
-    // Si el gráfico no existe lo crea; si ya existe solo actualiza sus datos
+// Gráficos de Chart.js y tablas accesibles ---
     function renderGraficos(periodo) {
-        if (!hayChart) return; // sin Chart.js solo se omiten los gráficos
-
         const etiquetas = periodo.map(d => etiquetaFecha(d.fecha));
+        const fechasOriginales = periodo.map(d => d.fecha);
         const unidades = periodo.map(d => d.ventas.reduce((s, v) => s + v.cantidad, 0));
         const activos = periodo.map(d => d.activos);
         const nuevos = periodo.map(d => d.nuevos);
+
+        // Actualizar tabla accesible de ventas
+        const tbodyVentas = document.querySelector("#tablaVentasAccesible tbody");
+        if (tbodyVentas) {
+            tbodyVentas.innerHTML = periodo.map((d, i) => `
+                <tr>
+                    <td>${fechasOriginales[i]}</td>
+                    <td>${unidades[i]}</td>
+                </tr>
+            `).join("");
+        }
+
+        // Actualizar tabla accesible de usuarios
+        const tbodyUsuarios = document.querySelector("#tablaUsuariosAccesible tbody");
+        if (tbodyUsuarios) {
+            tbodyUsuarios.innerHTML = periodo.map((d, i) => `
+                <tr>
+                    <td>${fechasOriginales[i]}</td>
+                    <td>${activos[i]}</td>
+                    <td>${nuevos[i]}</td>
+                </tr>
+            `).join("");
+        }
+
+        if (!hayChart) return; // sin Chart.js solo se omiten los gráficos canvas
 
         // Gráfico 1: unidades vendidas por día
         if (!graficoVentas) {

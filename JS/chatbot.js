@@ -25,6 +25,7 @@
 
     let historial = [];
     let esperandoRespuesta = false;
+    let idConversacion = 0;
 
     // ---------- Utilidades ----------
 
@@ -277,12 +278,16 @@
     }
 
     /**
-     * Reinicia por completo la conversación actual y limpia el almacenamiento local.
+     * Reinicia la conversación: invalida cualquier respuesta pendiente,
+     * borra el historial guardado y vuelve a mostrar el mensaje de bienvenida.
+     * @returns {void}
      */
     function reiniciarConversacion() {
+        idConversacion++;
         try { localStorage.removeItem(CONFIG.CLAVE_HISTORIAL); } catch { /* almacenamiento no disponible */ }
         historial = [];
         document.getElementById('chatbotMensajes').innerHTML = '';
+        bloquearEntrada(false);
         agregarMensaje(MENSAJE_BIENVENIDA, 'bot');
         pintarSugerencias();
     }
@@ -341,9 +346,10 @@
 
     // Punto de reemplazo: de momento responde en simulado; luego se cambia por la llamada a la IA.
     /**
-     * Obtiene la respuesta del asistente (simulada o mediante IA en el futuro).
+     * Obtiene la respuesta del asistente para el mensaje del usuario.
+     * Por ahora es simulada; es el punto de reemplazo para conectar la IA real.
      * @param {string} texto - Mensaje del usuario.
-     * @returns {Promise<Object>} Promesa con la respuesta del bot.
+     * @returns {Promise<{texto: string, productos?: Object[]}>} Respuesta del asistente.
      */
     async function obtenerRespuesta(texto) {
         await new Promise(r => setTimeout(r, CONFIG.RETARDO_SIMULADO_MS));
@@ -351,14 +357,17 @@
     }
 
     // ---------- Flujo de envío ----------
-
     /**
-     * Gestiona el flujo completo del envío de un mensaje de usuario y la respuesta del bot.
-     * @param {string} texto - Mensaje a enviar.
+     * Envía el mensaje del usuario y muestra la respuesta del asistente.
+     * Descarta la respuesta si la conversación se reinició mientras se esperaba.
+     * @param {string} texto - Mensaje escrito por el usuario.
+     * @returns {Promise<void>}
      */
     async function enviarMensaje(texto) {
         texto = texto.trim();
         if (!texto || esperandoRespuesta) return;
+
+        const idActual = idConversacion;
 
         ocultarSugerencias();
         agregarMensaje(texto, 'usuario');
@@ -367,13 +376,15 @@
 
         try {
             const respuesta = await obtenerRespuesta(texto);
+            if (idActual !== idConversacion) return;
             mostrarEscribiendo(false);
             agregarMensaje(respuesta.texto, 'bot', { productos: respuesta.productos });
         } catch {
+            if (idActual !== idConversacion) return;
             mostrarEscribiendo(false);
             agregarMensaje('No pude comunicarme con el asistente. Inténtalo de nuevo en unos minutos.', 'error');
         } finally {
-            bloquearEntrada(false);
+            if (idActual === idConversacion) bloquearEntrada(false);
         }
     }
 

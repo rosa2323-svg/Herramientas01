@@ -370,3 +370,21 @@
     }
     .chatbot-boton { right: 16px; bottom: 16px; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .chatbot-escribiendo span {
+        animation: none;
+        opacity: 0.7;
+    }
+
+    .chatbot-boton,
+    .chatbot-panel,
+    .chatbot-sugerencia,
+    .chatbot-enviar {
+        transition: none;
+    }
+
+    .chatbot-boton:hover {
+        transform: none;
+    }
+}

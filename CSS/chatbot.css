@@ -24,6 +24,8 @@
 .chatbot-boton.oculto {
     transform: scale(0);
     pointer-events: none;
+    visibility: hidden;
+    transition: transform 0.2s, background 0.2s, visibility 0s linear 0.2s;
 }
 
 .chatbot-panel {
@@ -41,17 +43,20 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-    font-family: var(--fuente-principal);
+    font-family: var(--fuente-principal), sans-serif;
     opacity: 0;
     transform: translateY(20px) scale(0.97);
     pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s;
+    visibility: hidden;
+    transition: opacity 0.2s, transform 0.2s, visibility 0s linear 0.2s;
 }
 
 .chatbot-panel.abierto {
     opacity: 1;
     transform: none;
     pointer-events: auto;
+    visibility: visible;
+    transition: opacity 0.2s, transform 0.2s, visibility 0s;
 }
 
 /* Cabecera */
@@ -174,8 +179,7 @@
     padding: 12px 14px;
     background: #ffffff;
     border: 1px solid #e3e3e8;
-    border-radius: 14px;
-    border-bottom-left-radius: 4px;
+    border-radius: 14px 14px 14px 4px;
 }
 
 .chatbot-escribiendo span {
@@ -364,4 +368,24 @@
         border-radius: 0;
     }
     .chatbot-boton { right: 16px; bottom: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chatbot-escribiendo span {
+        animation: none;
+        opacity: 0.7;
+    }
+
+    .chatbot-boton,
+    .chatbot-panel,
+    .chatbot-panel.abierto,
+    .chatbot-boton.oculto,
+    .chatbot-sugerencia,
+    .chatbot-enviar {
+        transition: none;
+    }
+
+    .chatbot-boton:hover {
+        transform: none;
+    }
 }

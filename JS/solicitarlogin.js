@@ -101,9 +101,9 @@ if (formRegistro) {
         }
 
         // 4. Validar contraseña robusta
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         if (!passwordRegex.test(password)) {
-            mostrarAlerta("La contraseña debe tener mínimo 6 caracteres, incluir una mayúscula, un número y un carácter especial.");
+            mostrarAlerta("La contraseña debe tener mínimo 8 caracteres, incluir una mayúscula, un número y un carácter especial.");
             return;
         }
 

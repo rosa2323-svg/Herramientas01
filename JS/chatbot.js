@@ -29,6 +29,11 @@
 
     // ---------- Utilidades ----------
 
+    /**
+     * Escapa caracteres especiales en un texto para prevenir inyecciones HTML.
+     * @param {string} texto - Texto original a escapar.
+     * @returns {string} Texto seguro con entidades HTML reemplazadas.
+     */
     function escapar(texto) {
         return String(texto)
             .replace(/&/g, '&amp;')
@@ -38,20 +43,37 @@
             .replace(/'/g, '&#39;');
     }
 
+    /**
+     * Obtiene la hora actual formateada en hora y minutos para Perú.
+     * @returns {string} Hora actual en formato de cadena.
+     */
     function horaActual() {
         return new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
     }
 
+    /**
+     * Formatea un número como moneda en Soles peruanos.
+     * @param {number} n - Cantidad numérica a formatear.
+     * @returns {string} Cadena formateada con el símbolo de moneda.
+     */
     function soles(n) {
         return 'S/ ' + Number(n).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
+    /**
+     * Obtiene el listado de productos disponibles globalmente.
+     * @returns {Array} Arreglo de productos o vacío si no está definido.
+     */
     function catalogo() {
         return (typeof productos !== 'undefined' && Array.isArray(productos)) ? productos : [];
     }
 
     // ---------- Construcción del DOM ----------
 
+    /**
+     * Construye y monta el widget del chatbot (botón flotante y panel) en el DOM.
+     * @returns {Object} Objeto con las referencias del botón, panel y estado en página.
+     */
     function construirWidget() {
         const contenedor = document.getElementById('contenedorChatbot');
         const boton = document.createElement('button');
@@ -96,6 +118,13 @@
 
     // ---------- Render de mensajes ----------
 
+    /**
+     * Crea un elemento de burbuja de mensaje para el chat.
+     * @param {string} texto - Contenido del mensaje.
+     * @param {string} tipo - Tipo de mensaje ('bot', 'usuario', 'error').
+     * @param {string} hora - Hora en la que se envió el mensaje.
+     * @returns {HTMLElement} Elemento DOM de la burbuja.
+     */
     function crearBurbuja(texto, tipo, hora) {
         const div = document.createElement('div');
         div.className = `chatbot-mensaje ${tipo}`;
@@ -103,6 +132,11 @@
         return div;
     }
 
+    /**
+     * Genera un contenedor con tarjetas de productos recomendados.
+     * @param {Array} lista - Arreglo de objetos de productos.
+     * @returns {HTMLElement} Contenedor con las tarjetas de productos.
+     */
     function crearTarjetasProductos(lista) {
         const contenedor = document.createElement('div');
         contenedor.className = 'chatbot-recomendaciones';
@@ -134,6 +168,12 @@
         return contenedor;
     }
 
+    /**
+     * Agrega un mensaje a la interfaz del chat y opcionalmente lo guarda en el historial.
+     * @param {string} texto - Mensaje a mostrar.
+     * @param {string} tipo - Tipo de mensaje.
+     * @param {Object} [opciones={}] - Opciones adicionales (hora, productos, sinGuardar).
+     */
     function agregarMensaje(texto, tipo, opciones = {}) {
         const zona = document.getElementById('chatbotMensajes');
         const hora = opciones.hora || horaActual();
@@ -154,6 +194,10 @@
         }
     }
 
+    /**
+     * Muestra u oculta el indicador de escritura animado del bot.
+     * @param {boolean} visible - Estado de visibilidad del indicador.
+     */
     function mostrarEscribiendo(visible) {
         const zona = document.getElementById('chatbotMensajes');
         let indicador = document.getElementById('chatbotEscribiendo');
@@ -170,6 +214,10 @@
         }
     }
 
+    /**
+     * Bloquea o desbloquea los campos de entrada del formulario del chat.
+     * @param {boolean} bloqueado - Define si se deben bloquear los elementos.
+     */
     function bloquearEntrada(bloqueado) {
         esperandoRespuesta = bloqueado;
         document.getElementById('chatbotEnviar').disabled = bloqueado;
@@ -177,10 +225,16 @@
         if (!bloqueado) document.getElementById('chatbotEntrada').focus();
     }
 
+    /**
+     * Oculta y limpia las sugerencias rápidas en pantalla.
+     */
     function ocultarSugerencias() {
         document.getElementById('chatbotSugerencias').innerHTML = '';
     }
 
+    /**
+     * Renderiza las burbujas de sugerencias rápidas disponibles para el usuario.
+     */
     function pintarSugerencias() {
         const caja = document.getElementById('chatbotSugerencias');
         caja.innerHTML = '';
@@ -196,6 +250,9 @@
 
     // ---------- Historial ----------
 
+    /**
+     * Restaura el historial de chat almacenado localmente en el navegador.
+     */
     function restaurarHistorial() {
         try {
             const guardado = JSON.parse(localStorage.getItem(CONFIG.CLAVE_HISTORIAL));
@@ -237,10 +294,20 @@
 
     // ---------- Respuestas simuladas ----------
 
+    /**
+     * Normaliza un texto removiendo acentos y convirtiéndolo a minúsculas.
+     * @param {string} texto - Texto a normalizar.
+     * @returns {string} Texto normalizado.
+     */
     function normalizar(texto) {
         return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
+    /**
+     * Genera una respuesta simulada basada en palabras clave del mensaje del usuario.
+     * @param {string} texto - Mensaje ingresado por el usuario.
+     * @returns {Object} Objeto con el texto de respuesta y productos opcionales.
+     */
     function responderSimulado(texto) {
         const t = normalizar(texto);
         const lista = catalogo().filter(p => p.stock > 0);
@@ -321,21 +388,41 @@
         }
     }
 
-    // ---------- Inicio ----------
+// ---------- Inicio ----------
 
+    /**
+     * Inicializa los componentes, eventos y estado inicial del chatbot.
+     */
     function iniciar() {
         const { boton, panel, enPagina } = construirWidget();
         const formulario = document.getElementById('chatbotFormulario');
         const entrada = document.getElementById('chatbotEntrada');
 
+        // Modo flotante: el panel arranca cerrado, así que sus controles no deben ser enfocables.
+        // En modo página (enPagina) el panel está siempre visible y no se toca.
+        if (!enPagina) panel.inert = true;
+
         function abrir() {
+            panel.inert = false;          // primero habilitar, para poder enfocar
             panel.classList.add('abierto');
             boton.classList.add('oculto');
-            entrada.focus();
+            boton.inert = true;           // el botón oculto no debe recibir foco
+
+            // Si está esperando respuesta, el input está deshabilitado; enfocamos el contenedor o el botón de limpiar para evitar errores de foco
+            if (esperandoRespuesta) {
+                const btnLimpiar = document.getElementById('chatbotLimpiar');
+                if (btnLimpiar) btnLimpiar.focus();
+            } else {
+                entrada.focus();
+            }
         }
         function cerrar() {
+            if (!panel.classList.contains('abierto')) return;
             panel.classList.remove('abierto');
+            panel.inert = true;           // saca del orden de tabulación el campo y los botones
             boton.classList.remove('oculto');
+            boton.inert = false;
+            boton.focus();                // devuelve el foco al botón de apertura
         }
 
         boton.addEventListener('click', abrir);

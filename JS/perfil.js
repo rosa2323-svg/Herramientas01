@@ -170,11 +170,20 @@ function mostrarMensajeGuardado() {
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formPerfil");
     if (!form) return;
-    // Nombre: no permite números ni símbolos (tampoco al pegar texto)
+// Nombre: no permite números ni símbolos (tampoco al pegar texto).
+// El filtro se omite durante una composición (teclas muertas, IME) para no
+// cancelarla, y se aplica cuando la composición termina.
     const inputNombre = document.getElementById("inputNombre");
-    inputNombre.addEventListener("input", () => {
-        inputNombre.value = inputNombre.value.replace(/[^\p{L} ']/gu, "");
+    const filtrarNombre = () => {
+        const limpio = inputNombre.value.replace(/[^\p{L} ']/gu, "");
+        if (limpio !== inputNombre.value) inputNombre.value = limpio;
+    };
+
+    inputNombre.addEventListener("input", (evento) => {
+        if (evento.isComposing) return;
+        filtrarNombre();
     });
+    inputNombre.addEventListener("compositionend", filtrarNombre);
 
     cargarFormularioPerfil();
 

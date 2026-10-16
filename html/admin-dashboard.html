@@ -65,13 +65,35 @@
         <div class="col-12 col-lg-6">
             <div class="card shadow-sm"><div class="card-body">
                 <h6 class="fw-bold">Unidades vendidas por día</h6>
-                <canvas id="graficoVentas"></canvas>
+                <canvas id="graficoVentas" role="img" aria-label="Gráfico de líneas que muestra las unidades vendidas por día"></canvas>
+                <!-- Resumen accesible para lectores de pantalla -->
+                <div class="visually-hidden">
+                    <table id="tablaVentasAccesible" aria-label="Datos de unidades vendidas por día">
+                        <thead>
+                        <tr><th>Fecha</th><th>Unidades vendidas</th></tr>
+                        </thead>
+                        <tbody>
+                        <!-- Se llena dinámicamente desde JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div></div>
         </div>
         <div class="col-12 col-lg-6">
             <div class="card shadow-sm"><div class="card-body">
                 <h6 class="fw-bold">Usuarios activos y nuevos</h6>
-                <canvas id="graficoUsuarios"></canvas>
+                <canvas id="graficoUsuarios" role="img" aria-label="Gráfico de líneas que muestra los usuarios activos y nuevos por día"></canvas>
+                <!-- Resumen accesible para lectores de pantalla -->
+                <div class="visually-hidden">
+                    <table id="tablaUsuariosAccesible" aria-label="Datos de usuarios activos y nuevos por día">
+                        <thead>
+                        <tr><th>Fecha</th><th>Usuarios activos</th><th>Usuarios nuevos</th></tr>
+                        </thead>
+                        <tbody>
+                        <!-- Se llena dinámicamente desde JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div></div>
         </div>
     </div>

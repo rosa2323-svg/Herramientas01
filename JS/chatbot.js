@@ -25,6 +25,7 @@
 
     let historial = [];
     let esperandoRespuesta = false;
+    let idConversacion = 0;
 
     // ---------- Utilidades ----------
 
@@ -220,9 +221,11 @@
     }
 
     function reiniciarConversacion() {
+        idConversacion++;
         try { localStorage.removeItem(CONFIG.CLAVE_HISTORIAL); } catch { /* almacenamiento no disponible */ }
         historial = [];
         document.getElementById('chatbotMensajes').innerHTML = '';
+        bloquearEntrada(false);
         agregarMensaje(MENSAJE_BIENVENIDA, 'bot');
         pintarSugerencias();
     }
@@ -281,6 +284,8 @@
         texto = texto.trim();
         if (!texto || esperandoRespuesta) return;
 
+        const idActual = idConversacion;
+
         ocultarSugerencias();
         agregarMensaje(texto, 'usuario');
         bloquearEntrada(true);
@@ -288,13 +293,15 @@
 
         try {
             const respuesta = await obtenerRespuesta(texto);
+            if (idActual !== idConversacion) return;
             mostrarEscribiendo(false);
             agregarMensaje(respuesta.texto, 'bot', { productos: respuesta.productos });
         } catch {
+            if (idActual !== idConversacion) return;
             mostrarEscribiendo(false);
             agregarMensaje('No pude comunicarme con el asistente. Inténtalo de nuevo en unos minutos.', 'error');
         } finally {
-            bloquearEntrada(false);
+            if (idActual === idConversacion) bloquearEntrada(false);
         }
     }
 

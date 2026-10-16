@@ -545,3 +545,124 @@ footer :focus-visible,
     color: var(--color-claro);
     border-bottom: 2px solid var(--color-secundario);
 }
+
+/* Responsive: Misión y Visión */
+@media (max-width: 991.98px) {
+    .row.g-5 {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 2rem;
+    }
+}
+
+/* Responsive: Registro */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #registro-main .col-md-10 {
+        width: 100%;
+    }
+    #registro-main .p-md-5 {
+        padding: 2rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #registro-main {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    #registro-main .p-4 {
+        padding: 1.25rem !important;
+    }
+}
+
+/* Responsive: márgenes, paddings y menú móvil */
+@media (max-width: 1199.98px) {
+    .navbar-collapse .position-relative.me-3 {
+        margin-right: 0 !important;
+        margin-top: 1rem;
+    }
+    .navbar-collapse .d-flex.align-items-center {
+        margin-top: 1rem !important;
+    }
+    .navbar-nav .nav-link.px-4 {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+    .navbar-brand {
+        font-size: 1.25rem !important;
+        letter-spacing: 2px !important;
+    }
+    main .py-5 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important;
+    }
+    main .my-5 {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+    .display-4 {
+        font-size: var(--fs-2xl);
+        letter-spacing: 1px !important;
+    }
+}
+
+/* Responsive: etiqueta de stock en tarjetas de producto */
+@media (max-width: 991.98px) {
+    .tarjeta-producto .p-3 {
+        padding: 0.5rem 0 !important;
+    }
+    .tarjeta-producto .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.4rem;
+    }
+    .tarjeta-producto-precio {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+/* ===== Términos y Condiciones ===== */
+.legal-banner { background: linear-gradient(135deg, var(--color-oscuro) 0%, var(--color-secundario) 100%); }
+.legal-texto { max-width: 70ch; line-height: 1.7; }
+
+/* Acordeón */
+.legal-acordeon .accordion-item {
+    border: 1px solid #dee2e6;
+    border-radius: .5rem !important;
+    margin-bottom: .75rem;
+    overflow: hidden;
+    background: #fff;
+}
+.legal-acordeon .accordion-button {
+    background: #f8f9fa;
+    color: #212529;
+    font-weight: 700;
+    padding: 1.25rem 1.5rem;
+    box-shadow: none;
+}
+.legal-acordeon .accordion-button:not(.collapsed) {
+    background: #f8f9fa;
+    color: #212529;
+    border-left: 4px solid var(--color-secundario);
+    border-bottom: 1px solid #dee2e6;
+}
+/* Flecha en círculo */
+.legal-acordeon .accordion-button::after,
+.legal-acordeon .accordion-button:not(.collapsed)::after {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #9a9a9a;
+    background-size: 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+.legal-acordeon .accordion-button:not(.collapsed)::after { background-color: #212529; }
+.legal-acordeon .accordion-body { padding: 1.5rem; }

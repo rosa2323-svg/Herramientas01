@@ -648,7 +648,7 @@ footer :focus-visible,
 .legal-acordeon .accordion-button:not(.collapsed) {
     background: #f8f9fa;
     color: #212529;
-    border-left: 4px solid #dc3545;
+    border-left: 4px solid var(--color-secundario);
     border-bottom: 1px solid #dee2e6;
 }
 /* Flecha en círculo */

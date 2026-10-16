@@ -378,6 +378,8 @@
 
     .chatbot-boton,
     .chatbot-panel,
+    .chatbot-panel.abierto,
+    .chatbot-boton.oculto,
     .chatbot-sugerencia,
     .chatbot-enviar {
         transition: none;

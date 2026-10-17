@@ -10,9 +10,9 @@ const PRODUCTOS_INICIALES = [
         especificaciones: { "Gama": "Media", "Garantía": "12 meses" } },
     { id: 5,  nombre: "Mouse Gamer RGB",            marca: "Logitech",    categoria: "accesorios",  precio: 189.00,  stock: 15, imagen: "mouse2.jpg",
         especificaciones: { "Tipo": "Mouse gamer", "Iluminación": "RGB" } },
-    { id: 6,  nombre: "Consola PlayStation 5",      marca: "Sony",        categoria: "accesorios",  precio: 2199.00, stock: 5,  imagen: "ps5.jpg",
+    { id: 6,  nombre: "Consola PlayStation 5",      marca: "Sony",        categoria: "consolas",  precio: 2199.00, stock: 5,  imagen: "ps5.jpg",
         especificaciones: { "Tipo": "Consola de videojuegos", "Garantía": "12 meses" } },
-    { id: 7,  nombre: "Nintendo Switch OLED",       marca: "Nintendo",    categoria: "accesorios",  precio: 1399.00, stock: 0,  imagen: "nintenswitch.jpg",
+    { id: 7,  nombre: "Nintendo Switch OLED",       marca: "Nintendo",    categoria: "consolas",  precio: 1399.00, stock: 0,  imagen: "nintenswitch.jpg",
         especificaciones: { "Tipo": "Consola portátil", "Pantalla": "OLED" } },
     { id: 8,  nombre: "Kit de Componentes PC",      marca: "AMD", categoria: "componentes", precio: 1299.00, stock: 8,  imagen: "componentesicon.jpeg",
         especificaciones: { "Tipo": "Kit para armado de PC", "Garantía": "12 meses" } }

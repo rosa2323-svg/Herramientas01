@@ -133,6 +133,7 @@
 }
 
 .chatbot-mensaje {
+    flex-shrink: 0;
     max-width: 85%;
     padding: 10px 14px;
     border-radius: 14px;
@@ -200,11 +201,13 @@
 
 /* Tarjetas de productos recomendados */
 .chatbot-recomendaciones {
+    flex-shrink: 0;
     align-self: flex-start;
     width: 100%;
     display: flex;
     gap: 10px;
     overflow-x: auto;
+    overflow-y: hidden;
     padding-bottom: 6px;
     scroll-snap-type: x mandatory;
 }

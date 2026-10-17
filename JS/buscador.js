@@ -5,7 +5,8 @@ const nombresCategorias = {
     laptops: "Laptops y Computadoras",
     telefonos: "Telefonos y Tablets",
     accesorios: "Accesorios",
-    componentes: "Componentes"
+    componentes: "Componentes",
+    consolas: "Consolas"
 };
 
 function normalizarTexto(texto) {

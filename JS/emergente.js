@@ -1,45 +1,36 @@
-// MODAL PROMOCIÓN EMERGENTE (Con LocalStorage y Delay de 3s)
+// MODAL PROMOCIÓN EMERGENTE (aparece en cada recarga, con delay de 3s)
 const elementoModal = document.getElementById('promoModal');
 
 if (elementoModal) {
-    // Comprobamos si el usuario ya vio/cerró la promoción
-    const promoMostrada = localStorage.getItem('promoMostrada');
+    const myModal = new bootstrap.Modal(elementoModal);
+    let otrosModalesActivos = 0;
+    let promoPendiente = false;
 
-    if (!promoMostrada) {
-        const myModal = new bootstrap.Modal(elementoModal);
-        let otrosModalesActivos = 0;
-        let promoPendiente = false;
+    const mostrarPromoSiLibre = () => {
+        if (promoPendiente && otrosModalesActivos === 0) {
+            promoPendiente = false;
+            myModal.show();
+        }
+    };
 
-        const mostrarPromoSiLibre = () => {
-            if (promoPendiente && otrosModalesActivos === 0) {
-                promoPendiente = false;
-                myModal.show();
-            }
-        };
+    // Registra los modales que se abren
+    document.addEventListener('show.bs.modal', function (e) {
+        if (e.target === elementoModal || e.defaultPrevented) return;
+        otrosModalesActivos++;
+    });
 
-        // Registra los modales que se abren (incluida su transición de entrada)
-        document.addEventListener('show.bs.modal', function (e) {
-            if (e.target === elementoModal || e.defaultPrevented) return;
-            otrosModalesActivos++;
-        });
+    // Cuando otro modal termina de cerrarse, muestra la promoción si estaba pendiente
+    document.addEventListener('hidden.bs.modal', function (e) {
+        if (e.target === elementoModal) return;
+        otrosModalesActivos = Math.max(0, otrosModalesActivos - 1);
+        mostrarPromoSiLibre();
+    });
 
-        // Cuando otro modal termina de cerrarse, muestra la promoción si estaba pendiente
-        document.addEventListener('hidden.bs.modal', function (e) {
-            if (e.target === elementoModal) return;
-            otrosModalesActivos = Math.max(0, otrosModalesActivos - 1);
-            mostrarPromoSiLibre();
-        });
-
-        // Espera 3 segundos antes de lanzarse
-        setTimeout(() => {
-            promoPendiente = true;
-            mostrarPromoSiLibre();
-        }, 3000);
-
-        elementoModal.addEventListener('hidden.bs.modal', function () {
-            localStorage.setItem('promoMostrada', 'true');
-        });
-    }
+    // Espera 3 segundos antes de lanzarse
+    setTimeout(() => {
+        promoPendiente = true;
+        mostrarPromoSiLibre();
+    }, 3000);
 }
 
 // MOSTRAR/OCULTAR CONTRASEÑA

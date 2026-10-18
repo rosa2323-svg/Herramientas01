@@ -4,7 +4,8 @@
         laptops:     "Laptops y Computadoras",
         telefonos:   "Teléfonos y Tablets",
         accesorios:  "Accesorios",
-        componentes: "Componentes"
+        componentes: "Componentes",
+        consolas:    "Consolas"
     };
 
     const cat = (new URLSearchParams(window.location.search).get("cat") || "").toLowerCase();

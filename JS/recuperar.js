@@ -37,6 +37,7 @@
 
         const modalRecuperar = document.getElementById("recuperarModal");
         const modalLogin = document.getElementById("loginModal");
+        let usuarioId = null;
         const formCorreo = document.getElementById("formRecuperarCorreo");
 
         function mostrarError(id, mensaje) {
@@ -70,7 +71,7 @@
             });
         });
 
-        // PASO 1: validar formato del correo
+        // PASO 1: validar formato y buscar el correo en localStorage
         formCorreo.addEventListener("submit", e => {
             e.preventDefault();
             limpiarErrores();
@@ -80,6 +81,11 @@
             if (!correo) return mostrarError("recuperarError1", "Ingresa tu correo electrónico.");
             if (!REGEX_CORREO.test(correo)) return mostrarError("recuperarError1", "El formato del correo no es válido.");
 
+            const usuario = obtenerUsuarios().find(u => u.correo.toLowerCase() === correo);
+            if (!usuario) return mostrarError("recuperarError1", "No encontramos una cuenta con ese correo.");
+            if (!usuario.activo) return mostrarError("recuperarError1", "Esta cuenta está deshabilitada. Contacta a soporte.");
+
+            usuarioId = usuario.id;
         });
     });
 })();

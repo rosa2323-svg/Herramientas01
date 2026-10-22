@@ -57,7 +57,13 @@
                     <button type="submit" class="btn btn-danger w-100 fw-bold rounded-pill py-2">ACTUALIZAR CONTRASEÑA</button>
                 </form>
 
-                <!-- PASO 3 -->
+                <!-- PASO 3: éxito -->
+                <div id="recuperarExito" class="d-none text-center">
+                    <i class="bi bi-check-circle-fill text-success mb-3" style="font-size: 3.5rem;"></i>
+                    <h5 class="fw-bold mb-2">¡Contraseña actualizada!</h5>
+                    <p class="text-secondary small mb-4">Ya puedes iniciar sesión con tu nueva contraseña.</p>
+                </div>
+
                 <!-- ENLACE VOLVER -->
             </div>
         </div>
@@ -72,6 +78,7 @@
         let usuarioId = null;
         const formCorreo = document.getElementById("formRecuperarCorreo");
         const formNueva = document.getElementById("formRecuperarNueva");
+        const exito = document.getElementById("recuperarExito");
 
         function mostrarError(id, mensaje) {
             const el = document.getElementById(id);
@@ -87,6 +94,7 @@
         function mostrarPaso(paso) {
             formCorreo.classList.toggle("d-none", paso !== 1);
             formNueva.classList.toggle("d-none", paso !== 2);
+            exito.classList.toggle("d-none", paso !== 3);
         }
 
         function reiniciar() {
@@ -150,7 +158,7 @@
             mostrarPaso(2);
         });
 
-        // PASO 2: validar nueva contraseña
+        // PASO 2: validar nueva contraseña y guardarla
         formNueva.addEventListener("submit", e => {
             e.preventDefault();
             limpiarErrores();
@@ -163,6 +171,11 @@
             }
             if (nueva !== confirmar) return mostrarError("recuperarError2", "Las contraseñas no coinciden.");
 
+            const lista = obtenerUsuarios().map(u => (u.id === usuarioId ? { ...u, password: nueva } : u));
+            const resultado = guardarLista(CLAVE_USUARIOS, lista);
+            if (!resultado.ok) return mostrarError("recuperarError2", resultado.error);
+
+            mostrarPaso(3);
         });
     });
 })();

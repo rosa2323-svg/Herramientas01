@@ -62,9 +62,18 @@
                     <i class="bi bi-check-circle-fill text-success mb-3" style="font-size: 3.5rem;"></i>
                     <h5 class="fw-bold mb-2">¡Contraseña actualizada!</h5>
                     <p class="text-secondary small mb-4">Ya puedes iniciar sesión con tu nueva contraseña.</p>
+                    <button type="button" data-volver-login class="btn btn-danger w-100 fw-bold rounded-pill py-2">
+                        INICIAR SESIÓN
+                    </button>
                 </div>
 
                 <!-- ENLACE VOLVER -->
+                <hr class="border-secondary">
+                <div class="text-center">
+                    <a href="#" data-volver-login class="small text-danger text-decoration-none">
+                        <i class="bi bi-arrow-left me-1"></i>Volver a iniciar sesión
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -127,6 +136,14 @@
                 e.preventDefault();
                 reiniciar();
                 cambiarModal(modalLogin, modalRecuperar);
+            });
+        });
+
+        // Recuperar -> Login
+        modalRecuperar.querySelectorAll("[data-volver-login]").forEach(enlace => {
+            enlace.addEventListener("click", e => {
+                e.preventDefault();
+                cambiarModal(modalRecuperar, modalLogin);
             });
         });
 

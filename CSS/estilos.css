@@ -121,6 +121,10 @@ h6 { font-size: var(--fs-h6); font-weight: var(--fw-medium); }
     }
 }
 
+.input-busqueda-mastertech {
+    min-width: 200px;
+}
+
 .navbar-nav .nav-link:hover {
     color: var(--color-hover) !important;
 }

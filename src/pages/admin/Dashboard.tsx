@@ -1,0 +1,123 @@
+import { useEffect, useMemo, useState } from 'react'
+import {
+  CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, PointElement, Tooltip,
+} from 'chart.js'
+import { Line } from 'react-chartjs-2'
+import { api } from '../../api/client'
+import type { Usuario, Venta } from '../../api/types'
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend)
+
+const DIAS = [30, 60, 90] as const
+
+const clave = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+
+export default function AdminDashboard() {
+  const [ventas, setVentas] = useState<Venta[]>([])
+  const [usuarios, setUsuarios] = useState<Usuario[]>([])
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [dias, setDias] = useState<number>(30)
+
+  useEffect(() => { document.title = 'MASTER TECH | Dashboard' }, [])
+  useEffect(() => {
+    Promise.all([api.ventas(), api.usuarios()])
+      .then(([v, u]) => { setVentas(v); setUsuarios(u) })
+      .catch(e => setError(e instanceof Error ? e.message : 'No se pudieron cargar los datos.'))
+      .finally(() => setCargando(false))
+  }, [])
+
+  const datos = useMemo(() => {
+    const hoy = new Date(); hoy.setHours(0, 0, 0, 0)
+    const dias_: string[] = []
+    for (let i = dias - 1; i >= 0; i--) { const d = new Date(hoy); d.setDate(hoy.getDate() - i); dias_.push(clave(d)) }
+    const idx = new Set(dias_)
+
+    const unidades: Record<string, number> = {}
+    const compradores: Record<string, Set<number | string>> = {}
+    const nuevos: Record<string, number> = {}
+    const porProducto = new Map<string, number>()
+
+    for (const v of ventas) {
+      const k = clave(new Date(v.fecha))
+      if (!idx.has(k)) continue
+      unidades[k] = (unidades[k] ?? 0) + v.cantidadItems
+      ;(compradores[k] ??= new Set()).add(v.usuarioId ?? v.usuarioEmail ?? v.id)
+      for (const d of v.detalles) porProducto.set(d.productoNombre, (porProducto.get(d.productoNombre) ?? 0) + d.cantidad)
+    }
+    for (const u of usuarios) {
+      if (!u.fechaRegistro) continue
+      const k = clave(new Date(u.fechaRegistro))
+      if (idx.has(k)) nuevos[k] = (nuevos[k] ?? 0) + 1
+    }
+
+    const top = [...porProducto.entries()].sort((a, b) => b[1] - a[1])[0]
+    const compradoresDia = dias_.map(k => compradores[k]?.size ?? 0)
+    return {
+      etiquetas: dias_.map(k => k.slice(5).split('-').reverse().join('/')),
+      unidades: dias_.map(k => unidades[k] ?? 0),
+      compradores: compradoresDia,
+      nuevos: dias_.map(k => nuevos[k] ?? 0),
+      top,
+      promedioCompradores: compradoresDia.reduce((a, b) => a + b, 0) / dias_.length,
+      totalNuevos: dias_.reduce((a, k) => a + (nuevos[k] ?? 0), 0),
+      desde: dias_[0], hasta: dias_[dias_.length - 1],
+    }
+  }, [ventas, usuarios, dias])
+
+  const opciones = { responsive: true, plugins: { legend: { display: true } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+
+  return (
+    <>
+      <div className="admin-encabezado">
+        <div>
+          <h1 className="admin-titulo">Indicadores (KPI)</h1>
+          <p className="admin-subtitulo">Resumen de ventas y usuarios de Master Tech, calculado con los datos reales de la tienda.</p>
+        </div>
+        <div>
+          <div className="btn-group" role="group" id="filtroDias" aria-label="Filtro de tiempo">
+            {DIAS.map(d => (
+              <button key={d} type="button" className={`btn btn-outline-dark ${dias === d ? 'active' : ''}`} aria-pressed={dias === d}
+                      onClick={() => setDias(d)}>{d} días</button>
+            ))}
+          </div>
+          <div className="texto-tenue small mt-1 text-end">Del {datos.desde} al {datos.hasta}</div>
+        </div>
+      </div>
+
+      {error && <div className="alert alert-danger">{error}</div>}
+
+      <div className="row g-3 mb-4">
+        <div className="col-12 col-md-4"><div className="card shadow-sm h-100"><div className="card-body">
+          <p className="text-muted small mb-1">Producto más vendido</p>
+          <h5 className="fw-bold mb-1">{cargando ? '-' : datos.top ? datos.top[0] : 'Sin ventas en el periodo'}</h5>
+          <small className="text-muted">{datos.top ? `${datos.top[1]} unidades` : ''}</small>
+        </div></div></div>
+        <div className="col-6 col-md-4"><div className="card shadow-sm h-100"><div className="card-body">
+          <p className="text-muted small mb-1">Clientes con compra (promedio diario)</p>
+          <h3 className="fw-bold mb-0">{cargando ? '-' : datos.promedioCompradores.toFixed(1)}</h3>
+        </div></div></div>
+        <div className="col-6 col-md-4"><div className="card shadow-sm h-100"><div className="card-body">
+          <p className="text-muted small mb-1">Usuarios nuevos (total del periodo)</p>
+          <h3 className="fw-bold mb-0">{cargando ? '-' : datos.totalNuevos}</h3>
+        </div></div></div>
+      </div>
+
+      <div className="row g-4">
+        <div className="col-12 col-lg-6"><div className="card shadow-sm"><div className="card-body">
+          <h6 className="fw-bold">Unidades vendidas por día</h6>
+          <Line options={opciones} data={{ labels: datos.etiquetas, datasets: [
+            { label: 'Unidades vendidas', data: datos.unidades, borderColor: '#d62839', backgroundColor: '#d62839', tension: 0.3 },
+          ] }} aria-label="Gráfico de líneas con las unidades vendidas por día" role="img" />
+        </div></div></div>
+        <div className="col-12 col-lg-6"><div className="card shadow-sm"><div className="card-body">
+          <h6 className="fw-bold">Clientes con compra y usuarios nuevos</h6>
+          <Line options={opciones} data={{ labels: datos.etiquetas, datasets: [
+            { label: 'Clientes con compra', data: datos.compradores, borderColor: '#06d6a0', backgroundColor: '#06d6a0', tension: 0.3 },
+            { label: 'Usuarios nuevos', data: datos.nuevos, borderColor: '#ffd166', backgroundColor: '#ffd166', tension: 0.3 },
+          ] }} aria-label="Gráfico de líneas con clientes con compra y usuarios nuevos por día" role="img" />
+        </div></div></div>
+      </div>
+    </>
+  )
+}

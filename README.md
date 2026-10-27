@@ -1,89 +1,26 @@
-# Master-tech-frontend — Tienda web de tecnología y servicios técnicos
 
-Tienda web para artículos de tecnología (laptops, computadoras, teléfonos, tablets, accesorios y componentes), con catálogo de productos, buscador, packs promocionales y sección de servicio técnico.
+# Master Tech — Frontend (React + TypeScript + Vite)
 
-**Stack tecnológico:** HTML5, CSS3, JavaScript, Bootstrap 5 y Bootstrap Icons (por CDN)
+Migración del front HTML/CSS/JS (`Master-tech-frontend`) a React, conectado al backend Spring Boot.
 
-## 1. Instalación y ejecución
-
-Este proyecto no requiere instalación de dependencias ni build, ya que es HTML/CSS/JS puro.
-
+## Ejecutar
 ```bash
-# 1. Clonar el repositorio
-git clone https://github.com/rosa2323-svg/Master-tech-frontend.git
-
-# 2. Abrir index.html directamente en el navegador
-# o usar la extensión "Live Server" en tu editor para verlo con recarga automática
+npm install
+cp .env.example .env     # VITE_API_URL=http://localhost:8089
+npm run dev              # http://localhost:5173
+npm run build            # genera dist/
 ```
+El backend debe estar en marcha y con `FRONTEND_URL=http://localhost:5173` (CORS + redirecciones de Stripe).
 
-## 2. Estructura del proyecto
+## Estructura
+- `src/api/` cliente `fetch` con JWT (`client.ts`) y tipos (`types.ts`)
+- `src/context/` sesión (JWT), catálogo, carrito (localStorage) y alertas
+- `src/components/` Navbar, Footer, LoginModal, Chatbot, ProductCard, rutas protegidas, layout admin
+- `src/pages/` tienda: Home, Category, Search, ProductDetail, Cart, PagoConfirmar, Register, Profile, Nosotros, Mision, Terminos
+- `src/pages/admin/` Productos, Categorías, Ventas, Dashboard, Usuarios (solo rol ADMIN)
 
-```text
-Master-tech-frontend/
-├── .github/
-├── .idea/
-├── CSS/
-│   ├── admin.css
-│   ├── chatbot.css
-│   └── estilos.css
-├── html/
-│   ├── admin-categorias.html
-│   ├── admin-dashboard.html
-│   ├── admin-productos.html
-│   ├── admin-usuarios.html
-│   ├── admin-ventas.html
-│   ├── carrito.html
-│   ├── categoria.html
-│   ├── mision.html
-│   ├── nosotros.html
-│   ├── perfil.html
-│   ├── producto.html
-│   ├── registro.html
-│   ├── resultados-busqueda.html
-│   └── terminos.html
-├── Imagenes/
-├── JS/
-│   ├── admin-categorias.js
-│   ├── admin-comun.js
-│   ├── admin-dashboard.js
-│   ├── admin-productos.js
-│   ├── admin-usuarios.js
-│   ├── admin-ventas.js
-│   ├── almacen.js
-│   ├── buscador.js
-│   ├── carrito.js
-│   ├── categoria.js
-│   ├── chatbot.js
-│   ├── dashboard-datos.js
-│   ├── emergente.js
-│   ├── perfil.js
-│   ├── producto.js
-│   ├── productos.js
-│   ├── renderizado.js
-│   ├── solicitarlogin.js
-│   └── usuarios-datos.js
-├── .coderabbit.yaml
-├── index.html
-└── README.md
-```
+## Flujo de compra
+Carrito en el navegador → `POST /api/v1/pedidos/checkout` (precios y stock se validan en el servidor) → Stripe Checkout → vuelve a `/pago/confirmar` → `POST /api/v1/pedidos/confirmar` registra la venta y descuenta stock.
 
-## 3. Flujo de trabajo (Git Flow)
-
-El proyecto sigue un enfoque basado en Git Flow, estructurado en ramas principales persistentes y ramas efímeras que se crean y eliminan según las necesidades de desarrollo del equipo.
-
-### Ramas Principales
-- `main`: Contiene la versión estable y final del proyecto (código de producción).
-- `develop`: Rama base de integración. Todas las nuevas características se unen aquí antes de pasar a la rama principal.
-
-### Nomenclatura de Ramas Efímeras
-Las ramas de trabajo se crean a partir de `develop` y utilizan los siguientes prefijos según su propósito:
-- `feature/*`: Desarrollo de nuevas funcionalidades, vistas HTML, diseños CSS o lógica en JS (ej. `feature/carrito`, `feature/admin-panel`).
-- `bugfix/*`: Corrección de errores detectados en desarrollo.
-- `hotfix/*`: Corrección de errores críticos detectados en producción.
-- `react/*`: Ramas específicas destinadas a la migración progresiva del proyecto hacia la tecnología React.
-
-### Reglas de protección y revisión de código:
-
-- **Integración de Bots de IA:** Para mantener la calidad del código, los repositorios cuentan con la integración de **CodeRabbit** y **GitHub Copilot**. Estos bots realizan revisiones automáticas en los Pull Requests, sugiriendo mejoras y detectando problemas potenciales.
-- Las ramas `main` y `develop` están protegidas. Requieren **Pull Request + 1 aprobación + resolución de conversaciones** antes de poder hacer el merge.
-- Las ramas de trabajo individual (`feature/*`, `bugfix/*`, etc.) **no** requieren PR para los commits diarios, agilizando el desarrollo hasta el momento de su integración definitiva hacia `develop`.
+## Rutas
+`/` · `/categoria/:slug` · `/buscar?query=` · `/producto/:id` · `/carrito` · `/registro` · `/perfil` · `/nosotros` · `/mision` · `/terminos` · `/admin/{productos,categorias,ventas,dashboard,usuarios}`
